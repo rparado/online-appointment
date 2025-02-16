@@ -1,0 +1,7 @@
+{
+  "name": "online-appointment",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

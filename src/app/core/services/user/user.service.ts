@@ -74,7 +74,27 @@ export class UserService {
             delay(250),
         );
     }
+    registerUser(email: string, password: string): Observable<User> {
+        let data = {
+            email: email,
+            password: password,
+        };
 
+        return this.http.post<GenericApiResponse>(this.API_BASE + `users/register`, data).pipe(
+            map((res) => {
+                if (res) {
+                    console.log('user saved successfully')
+                    let user_encrypted = res.data;
+                    return user_encrypted;
+
+                } else {
+                    console.log('cannots ave to register');
+                }
+                return res;
+            }),
+            delay(250),
+        );
+    }
 
 
 

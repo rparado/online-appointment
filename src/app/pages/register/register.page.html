@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>register</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<div class="form-container">
+		<form [formGroup]="myForm">
+			<ion-item>
+				<ion-input label="Email" type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-input label="Password" type="password" inputmode="text" formControlName="password" required="true"></ion-input>
+			</ion-item>
+			<ion-button expand="full" color="success" (click)="onRegister()">Register</ion-button>
+		</form>
+	</div>
+</ion-content>

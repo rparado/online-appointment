@@ -1,19 +1,24 @@
-<ion-header [translucent]="true">
-	<ion-toolbar>
-		<ion-title>register</ion-title>
-	</ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-	<div class="form-container">
-		<form [formGroup]="myForm">
-			<ion-item>
-				<ion-input label="Email" type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-input label="Password" type="password" inputmode="text" formControlName="password" required="true"></ion-input>
-			</ion-item>
-			<ion-button expand="full" color="success" (click)="onRegister()">Register</ion-button>
-		</form>
-	</div>
-</ion-content>
+<app-page-standard [loading]="loading" backButtonDefaultHref="login" class="ion-page">
+	
+	<ng-container main-content>
+		<h1 class="ion-margin-bottom">Create your account.</h1>
+			<div class="form-container">
+				<form [formGroup]="myForm">
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>E-mail</ion-label>
+						<ion-input  type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
+					</div>
+					<div class="input-wrapper">
+						<ion-label>Password</ion-label>
+						<ion-input type="password" inputmode="text" formControlName="password" required="true"></ion-input>
+					</div>
+					
+				</form>
+			</div>
+	</ng-container>
+	<ng-container footer-action>
+		<ion-button expand="block" color="primary" (click)="onRegister()" shape="round">Register</ion-button>
+	</ng-container>
+	
+	
+</app-page-standard>

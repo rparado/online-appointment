@@ -1,14 +1,28 @@
-<ion-content [fullscreen]="true" class="ion-padding">
-	<div class="form-container">
-		<form [formGroup]="myForm">
-			<ion-item>
-				<ion-input label="Email" type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-input label="Password" type="password" inputmode="text" formControlName="password" required="true"></ion-input>
-			</ion-item>
-			<ion-button expand="full" color="success" (click)="onLogin()">Login</ion-button>
-			<ion-button expand="full" color="secondary" (click)="gotoRegister()">Register</ion-button>
-		</form>
-	</div>
+<ion-header>
+    <ion-toolbar color="white">
+        <ion-title class="ion-text-center">
+			<ion-img src="./assets/logo.svg"></ion-img>
+        </ion-title>
+        
+    </ion-toolbar>
+</ion-header>
+<ion-content [forceOverscroll]="true" class="ion-padding">
+	<h3>Please enter your login details.</h3>
+	<form [formGroup]="myForm">
+		<div class="input-wrapper ion-margin-bottom">
+			<ion-label>E-mail</ion-label>
+			<ion-input  type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
+		</div>
+		<div class="input-wrapper">
+			<ion-label>Password</ion-label>
+			<ion-input type="password" inputmode="text" formControlName="password" required="true"></ion-input>
+		</div>
+		
+	</form>
 </ion-content>
+<ion-footer>
+	<ion-toolbar color="white">
+		<ion-button expand="block" color="primary" (click)="onLogin()" shape="round">Login</ion-button>
+		<ion-button expand="block" color="light" routerLink="/register" shape="round">Register</ion-button>
+	</ion-toolbar>
+</ion-footer>

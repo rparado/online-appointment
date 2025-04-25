@@ -1,37 +1,219 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
 
-/* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+html {
+    --ion-color-scheme: light;
+}
 
-/* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+@media (prefers-color-scheme: dark) {
+    html {
+        --ion-color-scheme: light;
+    }
+}
 
-/* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+// Custom
+ion-toolbar {
+    --padding-top: 0.9375rem;
+    --padding-bottom: 0.9375rem;
+    --padding-start: 0.9375rem;
+    --padding-end: 0.9375rem;
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+    ion-buttons {
+        min-height: 1.25rem;
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+        ion-button {
+            --border-radius: 0 !important;
+        }
+    }
+    ion-back-button {
+        --icon-font-size: 1.25rem;
+        font-size: 1.25rem;
+        --min-height: 1.25rem;
+
+        &::part(icon) {
+            padding: 0;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+        }
+    }
+}
+ion-header {
+    ion-toolbar {
+        --border-color: var(--ion-color-light);
+        --min-height: 3.5rem;
+    }
+}
+html.ios {
+    ion-modal {
+        ion-header {
+            ion-buttons {
+                min-height: 1.25rem;
+            }
+
+            ion-button {
+                font-size: 0.75rem;
+                min-height: 0.75rem;
+                min-width: 0;
+                --padding-start: 0;
+                --padding-end: 0;
+                margin-inline-start: 0;
+                margin-inline-end: 0;
+            }
+        }
+        ion-toolbar {
+            --padding-top: 0.9375rem;
+            --padding-bottom: 0.9375rem;
+            --padding-start: 0.9375rem;
+            --padding-end: 0.9375rem;
+            padding: 0;
+        }
+        ion-footer {
+            ion-toolbar {
+                &:first-of-type {
+                    padding-top: 0;
+                    --padding-top: 0.9375rem;
+                    --padding-bottom: 2.5rem;
+                }
+            }
+        }
+    }
+}
+.footer-ios {
+    box-shadow: 0px -0.5rem 0.625rem 0rem rgba(0, 0, 0, 0.1);
+
+    ion-toolbar {
+        --padding-bottom: 2.5rem;
+
+        &:first-of-type {
+            --border-width: 0;
+        }
+        ion-button {
+            + ion-button {
+                margin-top: 0.625rem;
+            }
+        }
+    }
+}
+ion-content {
+    --padding-top: 1.875rem;
+    --padding-bottom: 1.875rem;
+    --padding-start: 0.9375rem;
+    --padding-end: 0.9375rem;
+}
+ion-title {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    font-weight: 600;
+    --color: var(--ion-color-primary);
+    padding-inline: 2.5rem;
+}
+h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+    margin: 0 0 1.5rem 0;
+}
+h2 {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+    margin: 0 0 1.5rem 0;
+}
+h3 {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+    margin: 0 0 1.5rem 0;
+}
+p {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: var(--ion-color-dark);
+    margin-bottom: 1.875rem;
+    margin-top: 0;
+
+    &.small {
+        font-size: 1rem;
+        line-height: 1.375rem;
+    }
+    .link {
+        cursor: pointer;
+        border-bottom: 0.0625rem solid var(--ion-color-dark);
+        color: var(--ion-color-dark);
+    }
+    a {
+        cursor: pointer;
+        border-bottom: 0.0625rem solid var(--ion-color-dark);
+        color: var(--ion-color-dark);
+        text-decoration: none;
+    }
+}
+ion-button {
+    font-size: 1.125rem;
+    font-weight: 600;
+    --color: var(--ion-color-primary);
+    --background-hover-opacity: 0;
+    --box-shadow: 0 none;
+    letter-spacing: 0;
+    min-height: 3.125rem;
+    --min-height: 3.125rem;
+
+    &[disabled] {
+        opacity: 0.15;
+    }
+    &.button-small {
+        font-size: 0.875rem;
+        --min-height: 1.875rem;
+        min-height: 1.875rem;
+    }
+    &.button-large {
+        min-height: 3.75rem;
+        --min-height: 3.75rem;
+        font-size: 1.25rem;
+    }
+    &.button-outline {
+        --background-activated-opacity: 1;
+
+        &.ion-color-medium {
+            --background-activated: #e9f7fa;
+            --background-activated-opacity: 0;
+
+            &::part(native) {
+                color: var(--ion-color-primary);
+            }
+        }
+        &.ion-activated {
+            --background: #e9f7fa;
+            border-color: #7fcedf;
+        }
+        &.activated {
+            &::part(native) {
+                background-color: #e9f7fa;
+                border-color: #7fcedf;
+            }
+        }
+    }
+}
+.input-wrapper {
+    ion-label {
+        color: var(--ion-color-primary);
+        font-size: 1rem;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.3125rem;
+    }
+    ion-input {
+        font-size: 1.25rem;
+        --padding-start: 0.9375rem;
+        --color: var(--ion-color-dark);
+        border-radius: 0.625rem;
+        border: 0.0625rem solid var(--ion-color-medium);
+    }
+}
+.loading-bar {
+    --background: var(--ion-color-white);
+    --progress-background: var(--ion-color-primary);
+    height: 0.1875rem;
+    border-radius: 0;
+}

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="white">
+      <ion-buttons slot="start">
+          @if (showBackButton()) {
+              <ion-back-button
+                  text=""
+                  name="arrow-back-outline"
+                  [defaultHref]="backButtonDefaultHref()"
+                  color="primary"></ion-back-button>
+          }
+      </ion-buttons>
+      @if (pageTitle()) {
+          <ion-title>{{ pageTitle() }}</ion-title>
+      }
+      <ion-buttons slot="end">
+          <ng-content select="[header-button-slot-end]"></ng-content>
+      </ion-buttons>
+  </ion-toolbar>
+  @if (loading()) {
+      <ion-progress-bar type="indeterminate" class="loading-bar"></ion-progress-bar>
+  }
+</ion-header>
+
+<ion-content [fullscreen]="true" forceOverscroll="false" color="white">
+  <ng-content select="[main-content]"></ng-content>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="white">
+      <ng-content select="[footer-action]"></ng-content>
+  </ion-toolbar>
+</ion-footer>

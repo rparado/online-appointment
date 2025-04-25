@@ -4,5 +4,6 @@ export const PATH = {
     DOCTORS: 'doctors',
     APPOINTMENTS: 'appointments',
     PAYMENTS: 'payments',
-    REGISTER: 'register'
+    REGISTER: 'register',
+    APP_REDIRECTION: 'login',
 }

@@ -6,4 +6,5 @@ export const PATH = {
     PAYMENTS: 'payments',
     REGISTER: 'register',
     APP_REDIRECTION: 'login',
+    PROFILE:'profile'
 }

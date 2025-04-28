@@ -20,7 +20,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
   },
   {
-    path: 'page-standard',
-    loadComponent: () => import('./layouts/page-standard/page-standard.page').then( m => m.PageStandardPage)
+    path: 'profile',
+    loadComponent: () => import('./pages/profile-update/profile-update.page').then( m => m.ProfileUpdatePage)
   },
 ];

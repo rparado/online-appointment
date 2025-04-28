@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { User } from '../../../models/User';
-import { Observable, from, BehaviorSubject } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { Observable, from, BehaviorSubject, throwError } from 'rxjs';
+import { map, delay, catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { GenericApiResponse } from '../../../models/genericApiResponse';
@@ -74,26 +74,24 @@ export class UserService {
             delay(250),
         );
     }
-    registerUser(email: string, password: string): Observable<User> {
+    registerUser(email: string, password: string): Observable<any> {
         let data = {
             email: email,
             password: password,
         };
 
         return this.http.post<GenericApiResponse>(this.API_BASE + `users/register`, data).pipe(
-            map((res) => {
-                if (res) {
-                    console.log('user saved successfully')
-                    let user_encrypted = res.data;
-                    return user_encrypted;
-
-                } else {
-                    console.log('cannots ave to register');
-                }
-                return res;
+            tap((res) => {
+              if (res.status === "success") {
+                return res.data
+              }
+              return res;
             }),
-            delay(250),
-        );
+            catchError((error) => {
+              return throwError(() => new Error(error));
+            }),
+            delay(250)
+          );
     }
 
 

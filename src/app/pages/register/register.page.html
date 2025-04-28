@@ -6,18 +6,30 @@
 				<form [formGroup]="myForm">
 					<div class="input-wrapper ion-margin-bottom">
 						<ion-label>E-mail</ion-label>
-						<ion-input  type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
+						<ion-input  
+							type="text"  
+							formControlName="email" 
+							inputmode="email" 
+							required="true"
+							[errorText]="showError && myForm.get('email')?.invalid ? 'Invalid email' : ''"
+						></ion-input>
 					</div>
 					<div class="input-wrapper">
 						<ion-label>Password</ion-label>
-						<ion-input type="password" inputmode="text" formControlName="password" required="true"></ion-input>
+						<ion-input type="password" inputmode="text" formControlName="password" required="true" minlength="8"></ion-input>
 					</div>
 					
 				</form>
 			</div>
 	</ng-container>
 	<ng-container footer-action>
-		<ion-button expand="block" color="primary" (click)="onRegister()" shape="round">Register</ion-button>
+		<ion-button 
+			expand="block" 
+			color="primary" 
+			(click)="onRegister()" 
+			shape="round"
+			[disabled]="myForm.invalid || loading"
+		>Register</ion-button>
 	</ng-container>
 	
 	

@@ -1,6 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, input, OnInit } from '@angular/core';
 import {
     IonProgressBar,
     IonContent,
@@ -9,20 +7,22 @@ import {
     IonButtons,
     IonBackButton,
     IonTitle,
-    IonFooter,
-} from '@ionic/angular/standalone';
+    IonFooter, IonIcon, IonButton, ActionSheetController, NavController } from '@ionic/angular/standalone';
 import { PATH } from '../../configs/path';
+
+import { settingsOutline } from 'ionicons/icons';
+import { StorageService } from '@oda/core/services/storage/storage.service';
 
 @Component({
 	selector: 'app-page-standard',
 	templateUrl: './page-standard.page.html',
 	styleUrls: ['./page-standard.page.scss'],
 	standalone: true,
-	imports: [IonFooter, IonTitle, IonBackButton, IonButtons, IonToolbar, IonHeader, IonProgressBar, IonContent]
+	imports: [IonButton, IonIcon, IonFooter, IonTitle, IonBackButton, IonButtons, IonToolbar, IonHeader, IonProgressBar, IonContent]
 })
 export class PageStandardPage {
 
-	constructor() { }
+	settingsIcon = settingsOutline;
 
 	pageTitle = input('');
 
@@ -31,4 +31,47 @@ export class PageStandardPage {
 	showBackButton = input(true);
 
 	backButtonDefaultHref = input(PATH.APP_REDIRECTION);
-}
+
+	showProfileBtn = input(false);
+
+	actionSheetCtrl = inject(ActionSheetController);
+
+	storageService = inject(StorageService);
+
+	navCtrl = inject(NavController);
+
+	constructor() { }
+
+	
+	async presentActionSheet() {
+		const actionSheet = await this.actionSheetCtrl.create({
+		  header: 'Options',
+		  mode: 'md',
+		  buttons: [
+			
+			{
+				text: 'Profile',
+				handler: () => {
+					this.profilePage(); 
+				},
+			},
+			{
+				text: 'Logout',
+				role: 'destructive',
+				handler: () => {
+					this.logout(); 
+				},
+			},
+		  ],
+		});
+	
+		await actionSheet.present();
+	  }
+	logout() {
+		this.storageService.delete('token')
+		this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
+	}
+	profilePage() {
+		this.navCtrl.navigateRoot([`${PATH.PROFILE}`]);
+	}
+}	

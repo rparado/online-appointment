@@ -6,6 +6,8 @@ import { PATH } from '@oda/config/path';
 import { Storage } from '@ionic/storage';
 import { StorageService } from '@oda/core/services/storage/storage.service';
 import { RouterModule } from '@angular/router';
+import { UserService } from '@oda/core/services/user/user.service';
+import { ToastService } from '@oda/core/services/toast.service';
 
 @Component({
 	selector: 'app-intro',
@@ -16,31 +18,67 @@ import { RouterModule } from '@angular/router';
 })
 export class IntroPage implements OnInit {
 	navCtrl = inject(NavController);
+
 	fb = inject(FormBuilder);
+
 	storage = inject(Storage);
+
 	storageService = inject(StorageService);
+
+	userService = inject(UserService);
+	
 	
 	myForm: FormGroup = this.fb.group({
         email: ['', Validators.compose([Validators.required, Validators.email])],
         password: ['', Validators.compose([Validators.required])],
     });
 
+	showError = false;
+	
+	loading: boolean = false;
 
-	constructor() { 
-		this.myForm.patchValue({
-            email: '',
-            password: '',
-        });
-	}
+	toastService = inject(ToastService);
 
 	ngOnInit() {
+		this.myForm.reset();
 	}
 	gotoRegister() {
 		this.navCtrl.navigateForward(PATH.REGISTER);
 	}
 	onLogin() {
-		const formValue = this.myForm.value;
-		console.log('formValue ', formValue)
-
-	}
+		this.loading = true;
+		this.showError = true;
+		const email = this.myForm.value.email;
+		const password = this.myForm.value.password;
+	
+		if (this.myForm.invalid) {
+			return; 
+		}
+	
+		  this.userService.login(email, password)
+		  .subscribe({
+			next: (data) => {
+				if (data.status === "success") {
+					this.toastService.presentSuccessToast(data.message);
+					this.loading = false;
+	
+					if(data.user.isProfileUpdated == 0 ) {
+						this.navCtrl.navigateForward(PATH.PROFILE)
+					} else {
+						this.navCtrl.navigateForward(PATH.APPOINTMENTS)
+					}
+						
+	
+				} else {
+					this.toastService.presentErrorToast(data.message);
+					this.loading = false;
+				}
+			},
+			error: (err) => {
+			  console.log(err);
+			  this.toastService.presentErrorToast(err);
+			  this.loading = false;
+			}
+		  });
+	  }
 }

@@ -1,99 +1,70 @@
 import { inject, Injectable } from '@angular/core';
-import { User } from '../../../models/User';
-import { Observable, from, BehaviorSubject, throwError } from 'rxjs';
-import { map, delay, catchError, tap } from 'rxjs/operators';
+import { Observable, } from 'rxjs';
+import { map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { GenericApiResponse } from '../../../models/genericApiResponse';
 import { Storage } from '@ionic/storage';
+import { UserProfile } from 'src/app/models/User';
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class UserService {
-    private API_BASE = environment.apiUrl;
-
-    readonly storageKey = 'activeUser';
-
-    private reloadUserSubject = new BehaviorSubject<boolean>(true);
-    reloadUser = this.reloadUserSubject.asObservable();
-
-    private http = inject(HttpClient);
-    private storage = inject(Storage);
-
-    tempUser: User = <User>{};
-    tempPassword: string = '';
-
-    updateSupplySource: string = '';
-
-    trainingToSettings: boolean = false;
-
-    constructor() {}
-
-    getUserFromStorage(): Observable<User> {
-        return from(this.storage.get(this.storageKey));
-    }
-
-    triggerReloadUser() {
-        this.reloadUserSubject.next(true);
-    }
-
-    async logout(): Promise<any> {
-        const promise1 = this.storage.remove('token');
-
-        return Promise.all([promise1]);
-    }
-    authenticate(email: string, password: string): Observable<User> {
-        let email_encrypted = email;
-        let password_encrypted = password;
-
-        let data = {
-            email: email_encrypted,
-            password: password_encrypted,
-        };
-
-        return this.http.post<GenericApiResponse>(this.API_BASE + `/authenticate`, data).pipe(
-            map((res) => {
-                if (res.status == 'OK') {
-                    let user_encrypted = res.data.user;
-
-                    let user_decrypted_data = user_encrypted;
-
-                    let updatedUser = user_decrypted_data;
+	private API_BASE = environment.apiUrl;
 
 
-                    this.storage.set('token', res.data.token);
+	private http = inject(HttpClient);
+	private storage = inject(Storage);
 
-                    return updatedUser;
-                } else {
-                    console.log('/authenticate resp error');
-                    this.storage.remove('token');
-                    throw new Error(res.status);
-                }
-            }),
-            delay(250),
-        );
-    }
-    registerUser(email: string, password: string): Observable<any> {
-        let data = {
-            email: email,
-            password: password,
-        };
+	constructor() {}
 
-        return this.http.post<GenericApiResponse>(this.API_BASE + `users/register`, data).pipe(
-            tap((res) => {
-              if (res.status === "success") {
-                return res.data
-              }
-              return res;
-            }),
-            catchError((error) => {
-              return throwError(() => new Error(error));
-            }),
-            delay(250)
-          );
-    }
 
+	async logout(): Promise<any> {
+		const promise1 = this.storage.remove('token');
+		const promise2 = this.storage.remove('user');
+		return Promise.all([promise1, promise2]);
+	}
+	login(email: string, password: string): Observable<any> {
+		const data = { email, password };
+		return this.http.post<any>(this.API_BASE + 'users/login', data).pipe(
+		  map((res) => {
+			if (res.status === 'success') {
+			  localStorage.setItem('token', res.token);
+			  return res;
+			} else {
+			  throw new Error(res.message);
+			}
+		  })
+		);
+	  }
+	register(email: string, password: string, role: string = 'patient'): Observable<any> {
+		const data = { email, password, role };
+		return this.http.post<any>(this.API_BASE + 'users/register', data).pipe(
+		  map((res) => {
+			if (res.status === 'success') {
+				localStorage.setItem('user', JSON.stringify(res.user));
+				localStorage.setItem('token', res.token);
+			  return res;
+			} else {
+			  throw new Error(res.message);
+			}
+		  })
+		);
+	  }
+	
+	  ///user/profile
+	updateProfile(userData: UserProfile): Observable<UserProfile>{
+		return this.http.put<any>(this.API_BASE + 'profile/${userId}/update', userData).pipe(
+			map((res) => {
+				console.log('res ', res)
+			  if (res.status === 'success') {
+				return res;
+			  } else {
+				throw new Error(res.message);
+			  }
+			})
+		  );
+	}
 
 
 }

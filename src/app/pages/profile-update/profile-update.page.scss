@@ -1,0 +1,18 @@
+.image-preview {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+    flex-direction: column;
+  }
+  
+  .image-preview img {
+    width: 4.375rem;
+    height: 4.375rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+
+  .no-background {
+    --background: transparent;
+  }

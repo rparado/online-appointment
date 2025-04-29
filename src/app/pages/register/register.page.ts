@@ -50,7 +50,7 @@ export class RegisterPage implements OnInit {
 		return; 
 	  }
 
-	  this.userService.registerUser(email, password)
+	  this.userService.register(email, password)
 	  .subscribe({
 		next: (data) => {
 
@@ -61,7 +61,7 @@ export class RegisterPage implements OnInit {
 				this.navCtrl.navigateForward(PATH.PROFILE)
 
 			} else {
-				this.toastService.presentErrorToast('Error in submitting!');
+				this.toastService.presentErrorToast(data.message);
 				this.loading = false;
 			}
 		},

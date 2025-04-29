@@ -23,4 +23,8 @@ export const routes: Routes = [
     path: 'profile',
     loadComponent: () => import('./pages/profile-update/profile-update.page').then( m => m.ProfileUpdatePage)
   },
+  {
+    path: 'appointment',
+    loadComponent: () => import('./pages/appointment/appointment.page').then( m => m.AppointmentPage)
+  },
 ];

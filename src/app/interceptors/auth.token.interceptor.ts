@@ -15,13 +15,10 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         // List of API calls we want to add the Bearer token
         // this will be updated once all api endpoints completed
         const apiEndpoints = [
-            `${this.API_BASE}/update-email`,
-            `${this.API_BASE}/update-password`,
-            `${this.API_BASE}/export`,
-            `${this.API_BASE}/delete-account`,
-            `${this.API_BASE}/sync-account`,
-            `${this.API_BASE}/get-user`,
-            `${this.API_BASE}/version`,
+            `${this.API_BASE}/profile`,
+            `${this.API_BASE}/appointment`,
+            `${this.API_BASE}/doctors`,
+            `${this.API_BASE}/payment`
         ];
 
         // Only intercept requests to the specified API endpoints

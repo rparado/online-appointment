@@ -1,11 +1,127 @@
-<app-page-standard [loading]="loading" backButtonDefaultHref="login" class="ion-page" [showProfileBtn]="true">
-  <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">profile-update</ion-title>
-      </ion-toolbar>
-    </ion-header>
-  </ion-content>
+<app-page-standard [loading]="loading" backButtonDefaultHref="login" class="ion-page" [showProfileBtn]="true" [pageTitle]="'Profile'">
+	<ng-container main-content>
+		<h1 class="ion-margin-bottom">Update your profile.</h1>
+		<br />
+			<div class="form-container">
+				<form [formGroup]="myForm" enctype="multipart/form-data">
+					<div class="input-wrapper ion-margin-bottom">
+						<div class="input-wrapper ion-margin-bottom">
+							<ion-label>Upload or capture your photo <ion-text color="danger">(Required)</ion-text></ion-label>
+							<input 
+								type="file" 
+								id="image" 
+								accept="image/*" 
+								capture="environment" 
+								(change)="onFileSelected($event)"
+								/>
+							<div *ngIf="imagePreview" class="image-preview ">
+								<ion-label>Preview</ion-label>
+								<img [src]="imagePreview" alt="Image preview" />
+							</div>
+						</div>
+						<ion-label>First Name <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input  
+							type="text"  
+							formControlName="f_name" 
+							inputmode="text" 
+							required="true"
+							minlength="1"
+						></ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Middle Name <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input  
+							type="text"  
+							formControlName="m_name" 
+							inputmode="text" 
+							required="true"
+							minlength="1"
+						></ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Last Name <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input  
+							type="text"  
+							formControlName="l_name" 
+							inputmode="text" 
+							required="true"
+							minlength="1"
+						></ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Date of birth <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input
+							readonly
+							[value]="dobDisplay"
+							formControlName="dob"
+							(click)="showDatePicker = true">
+						</ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Age</ion-label>
+						<ion-input  
+							type="text"  
+							formControlName="age" 
+							inputmode="text" 
+							required="true"
+							minlength="1"
+							readonly="true"
+							[disabled]="true"
+						></ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Gender <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-radio-group formControlName="gender">
+							<ion-item class="no-background ">
+							  <ion-label>Male</ion-label>
+							  <ion-radio slot="start" value="male"></ion-radio>
+							</ion-item>
+							<ion-item class="no-background ">
+							  <ion-label>Female</ion-label>
+							  <ion-radio slot="start" value="female"></ion-radio>
+							</ion-item>
+						  </ion-radio-group>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Phone number <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input  
+							type="text"  
+							formControlName="phone_number" 
+							inputmode="text" 
+							minlength="1"
+						></ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Address <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input  
+							type="text"  
+							formControlName="address" 
+							inputmode="text" 
+							minlength="1"
+						></ion-input>
+					</div>
+				</form>
+			</div>
+			<ion-modal [isOpen]="showDatePicker" (didDismiss)="showDatePicker = false">
+				<ng-template>
+				  <ion-datetime
+					presentation="date"
+					(ionChange)="onDobChange($event)"
+					[value]="myForm.get('dob')?.value"
+					show-default-buttons="true"
+				  ></ion-datetime>
+				</ng-template>
+			  </ion-modal>
+	</ng-container>
+	<ng-container footer-action>
+		<ion-button 
+			expand="block" 
+			color="primary" 
+			(click)="onUpdate()" 
+			shape="round"
+			[disabled]="myForm.invalid || loading"
+		>Update</ion-button>
+	</ng-container>
 </app-page-standard>
 
 

@@ -12,6 +12,7 @@ import { PATH } from '../../configs/path';
 
 import { settingsOutline } from 'ionicons/icons';
 import { StorageService } from '@oda/core/services/storage/storage.service';
+import { UserService } from '@oda/core/services/user/user.service';
 
 @Component({
 	selector: 'app-page-standard',
@@ -37,6 +38,8 @@ export class PageStandardPage {
 	actionSheetCtrl = inject(ActionSheetController);
 
 	storageService = inject(StorageService);
+
+	userService = inject(UserService);
 
 	navCtrl = inject(NavController);
 
@@ -67,8 +70,8 @@ export class PageStandardPage {
 	
 		await actionSheet.present();
 	  }
-	logout() {
-		this.storageService.delete('token')
+	async logout() {
+		await this.userService.logout()
 		this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
 	}
 	profilePage() {

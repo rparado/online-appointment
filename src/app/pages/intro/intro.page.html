@@ -22,7 +22,13 @@
 </ion-content>
 <ion-footer>
 	<ion-toolbar color="white">
-		<ion-button expand="block" color="primary" (click)="onLogin()" shape="round">Login</ion-button>
+		<ion-button 
+			expand="block" 
+			color="primary" 
+			(click)="onLogin()" 
+			shape="round"
+			[disabled]="myForm.invalid || loading"
+		>Login</ion-button>
 		<ion-button expand="block" color="light" routerLink="/register" shape="round">Register</ion-button>
 	</ion-toolbar>
 </ion-footer>

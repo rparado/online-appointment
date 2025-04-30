@@ -13,6 +13,7 @@
 								accept="image/*" 
 								capture="environment" 
 								(change)="onFileSelected($event)"
+								formControlName="avatar"
 								/>
 							<div *ngIf="imagePreview" class="image-preview ">
 								<ion-label>Preview</ion-label>

@@ -71,7 +71,8 @@ export class PageStandardPage {
 		await actionSheet.present();
 	  }
 	async logout() {
-		await this.userService.logout()
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
 		this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
 	}
 	profilePage() {

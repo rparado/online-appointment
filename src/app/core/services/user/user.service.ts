@@ -29,6 +29,7 @@ export class UserService {
 		return this.http.post<any>(this.API_BASE + 'users/login', data).pipe(
 		  map((res) => {
 			if (res.status === 'success') {
+				localStorage.setItem('user', JSON.stringify(res.user));
 			  localStorage.setItem('token', res.token);
 			  return res;
 			} else {
@@ -53,8 +54,8 @@ export class UserService {
 	  }
 	
 	  ///user/profile
-	updateProfile(userData: UserProfile): Observable<UserProfile>{
-		return this.http.put<any>(this.API_BASE + 'profile/${userId}/update', userData).pipe(
+	updateProfile(userId: number, userData: UserProfile): Observable<UserProfile>{
+		return this.http.put<any>(`${this.API_BASE}profile/${userId}/update`, userData).pipe(
 			map((res) => {
 				console.log('res ', res)
 			  if (res.status === 'success') {

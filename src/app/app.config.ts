@@ -29,6 +29,16 @@ export const AppConfig: ApplicationConfig = {
             useSetInputAPI: true, //allow to use signal input in modals
         }),
         provideHttpClient(withInterceptorsFromDi()),
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthTokenInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthTokenInvalidInterceptor,
+            multi: true,
+        },
         provideRouter(
             routes,
             withPreloading(PreloadAllModules),
@@ -47,16 +57,7 @@ export const AppConfig: ApplicationConfig = {
         //     useClass: ApiErrorMessageInterceptor,
         //     multi: true,
         // },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthTokenInterceptor,
-            multi: true,
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthTokenInvalidInterceptor,
-            multi: true,
-        },
+        
     ],
 }
 

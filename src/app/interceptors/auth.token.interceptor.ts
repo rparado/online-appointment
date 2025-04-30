@@ -1,48 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+     providedIn: 'root'
+})
 export class AuthTokenInterceptor implements HttpInterceptor {
     private API_BASE = environment.apiUrl;
 
-    constructor(private storage: Storage) {}
+    private interceptUrls = [
+        'profile',
+        'appointment',
+        'doctors',
+        'payment'
+    ];
+
+    constructor() {
+
+    }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // List of API calls we want to add the Bearer token
-        // this will be updated once all api endpoints completed
-        const apiEndpoints = [
-            `${this.API_BASE}/profile`,
-            `${this.API_BASE}/appointment`,
-            `${this.API_BASE}/doctors`,
-            `${this.API_BASE}/payment`
-        ];
+        const shouldIntercept = this.interceptUrls.some(path =>
+            request.url.startsWith(`${this.API_BASE}${path}/`) || request.url === `${this.API_BASE}${path}`
+          );
+        const token = localStorage.getItem('token');
 
-        // Only intercept requests to the specified API endpoints
-        if (apiEndpoints.includes(request.url)) {
-            // Convert the Promise from storage.get to an Observable using 'from'
-            return from(this.storage.get('token')).pipe(
-                switchMap((token: string | null) => {
-                    if (token) {
-                        // Clone the request and add the Authorization header with the token
-                        const clonedRequest = request.clone({
-                            setHeaders: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                        });
-                        return next.handle(clonedRequest);
-                    } else {
-                        // If no token found, pass the original request without modifications
-                        return next.handle(request);
-                    }
-                }),
-            );
-        } else {
-            // Pass non-matching requests through without modification
+        if (!shouldIntercept) {
             return next.handle(request);
         }
+     
+        // Only intercept requests to the specified API endpoints
+        if (token) {
+            const clonedRequest = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return next.handle(clonedRequest);
+        } else {
+            return next.handle(request);
+        }
+        
     }
 }

@@ -111,8 +111,11 @@ export class ProfileUpdatePage implements OnInit  {
 			return; 
 		}
 
+		const userString  = localStorage.getItem('user');
+		const user = userString ? JSON.parse(userString) : null;
+
 		const userData = {
-			userId: 41,
+			userId: user.id,
 			firstName: this.myForm.value.f_name,
 			middleName: this.myForm.value.m_name,
 			lastName: this.myForm.value.l_name,
@@ -124,7 +127,7 @@ export class ProfileUpdatePage implements OnInit  {
 			gender: this.myForm.value.gender,
 		}
 		
-		this.userService.updateProfile(userData)
+		this.userService.updateProfile(user.id, userData)
 		.subscribe({
 		next: (data: any) => {
 			console.log('data ', data)

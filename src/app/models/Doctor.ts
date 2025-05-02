@@ -6,11 +6,11 @@ export interface Doctor {
     biography: string;
     profile: UserProfile;
     specialization: string;
-    avalabilities: DoctorAvailabilities[]
+    availabilities: DoctorAvailabilities[]
 }
 
 export interface DoctorAvailabilities {
-    name: string;
+    day: string;
     startTime: string | Date;
     endTime: string;
 }

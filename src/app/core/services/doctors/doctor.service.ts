@@ -26,4 +26,15 @@ export class DoctorService {
 			})
 		);
 	}
+	getDoctor(id:string) {
+		return this.http.get<GenericApiResponse>(`${this.API_BASE}doctors/${id}`).pipe(
+			map((res) => {
+				if (res.status === 'success') {
+				return res.data as Doctor;
+				} else {
+				throw new Error(res.message);
+				}
+			})
+		);
+	}
 }

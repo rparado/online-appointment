@@ -1,5 +1,23 @@
-<app-page-standard [loading]="loading"  class="ion-page" [showProfileBtn]="true" [pageTitle]="'Doctors'">
+<app-page-standard [loading]="loading"  backButtonDefaultHref="doctors" class="ion-page" [showProfileBtn]="true" [pageTitle]="doctor?.profile?.firstName + ' ' + doctor?.profile?.middleName + ' ' + doctor?.profile?.lastName">
 	<ng-container main-content>
+		<ion-img
+			class="ion-margin-bottom"
+			src="{{doctor?.profile?.avatar}}"
+			alt="{{doctor?.profile?.firstName + ' ' + doctor?.profile?.middleName + ' ' + doctor?.profile?.lastName}}"
+		></ion-img>
+		<div [innerHTML]="doctor?.biography"></div>
+		<h4>Clinic Schedules:</h4>
+		@for (item of doctor?.availabilities; track item; let index = $index) {
+			<ion-card >
+				<ion-card-header>
+				  <ion-card-subtitle>{{ item.day }}</ion-card-subtitle>
+				</ion-card-header>
+				<ion-card-content>
+				  <p><strong>Start Time:</strong> {{ item.startTime | date: 'MMMM d, y h:mm a' }}</p>
+				  <p><strong>End Time:</strong> {{ item.endTime  | date: 'MMMM d, y h:mm a'}}</p>
+				</ion-card-content>
+			  </ion-card>
+		}
 	</ng-container>
 	<ng-container footer-action>
 		<ion-button 

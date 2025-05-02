@@ -110,6 +110,7 @@
 					(ionChange)="onDobChange($event)"
 					[value]="myForm.get('dob')?.value"
 					show-default-buttons="true"
+					[max]="today"
 				  ></ion-datetime>
 				</ng-template>
 			  </ion-modal>

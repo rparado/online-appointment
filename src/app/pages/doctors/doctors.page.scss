@@ -1,0 +1,25 @@
+ion-item, ion-list {
+    --background: var(--ion-color-base);
+
+}
+.list-ios {
+    background: var(--ion-color-base, var(--ion-background-color, #fff));
+}
+ion-item {
+    padding: 10px 0;
+
+}
+ion-avatar {
+    ion-label {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #42414F;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #dee2e6;
+        line-height: 2.5rem;
+        text-align: center;
+    }
+}

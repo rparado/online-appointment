@@ -65,7 +65,7 @@ export class IntroPage implements OnInit {
 					if(data.user.isProfileUpdated == 0 ) {
 						this.navCtrl.navigateForward(PATH.PROFILE)
 					} else {
-						this.navCtrl.navigateForward(PATH.APPOINTMENTS)
+						this.navCtrl.navigateForward(PATH.DOCTORS)
 					}
 						
 	

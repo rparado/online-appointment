@@ -1,0 +1,13 @@
+<app-page-standard [loading]="loading"  class="ion-page" [showProfileBtn]="true" [pageTitle]="'Doctors'">
+	<ng-container main-content>
+	</ng-container>
+	<ng-container footer-action>
+		<ion-button 
+			expand="block" 
+			color="primary" 
+			(click)="submit()" 
+			shape="round"
+			[disabled]="myForm.invalid || loading"
+		>Create Appointment</ion-button>
+	</ng-container>
+</app-page-standard>

@@ -40,7 +40,7 @@ export class ProfileUpdatePage implements OnInit  {
 		age: ['',],
 		phone_number: ['', Validators.compose([Validators.required])],
 		address: ['', Validators.compose([Validators.required])],
-		gender: ['', Validators.compose([Validators.required])]
+		gender: ['male', Validators.compose([Validators.required])]
 	});
 
 
@@ -53,22 +53,27 @@ export class ProfileUpdatePage implements OnInit  {
 
 	dobDisplay: string = '';
 	
+	today: string = '';
+
 	constructor() { }
 
 	ngOnInit() {
+		const now = new Date();
+  		this.today = now.toISOString().split('T')[0];
 	}
 
 
 	onFileSelected(event: any) {
-		const file = event.target.files[0];
-		if (file) {
-		  this.selectedFile = file;
-	
-		  const reader = new FileReader();
-		  reader.onload = () => {
+		const input = event.target as HTMLInputElement;
+
+		if (input.files && input.files.length > 0) {
+			this.selectedFile = input.files[0];
+
+			const reader = new FileReader();
+			reader.onload = () => {
 			this.imagePreview = reader.result;
-		  };
-		  reader.readAsDataURL(file);
+			};
+			reader.readAsDataURL(this.selectedFile);
 		}
 	}
 	onDobChange(event: any) {
@@ -76,7 +81,7 @@ export class ProfileUpdatePage implements OnInit  {
   
 		if (!rawDate) return;
 	  
-		const formattedDate = rawDate.split('T')[0]; // Ensure we only keep the 'YYYY-MM-DD' part
+		const formattedDate = rawDate.split('T')[0];
 		this.dobDisplay = formattedDate;
 	  
 		this.myForm.get('dob')?.setValue(formattedDate);
@@ -98,14 +103,6 @@ export class ProfileUpdatePage implements OnInit  {
 	}
 
 	onUpdate() {
-		const formData = new FormData();
-		Object.entries(this.myForm.value).forEach(([key, value]) => {
-		  formData.append(key, value as string);
-		});
-	
-		if (this.selectedFile) {
-		  formData.append('avatar', this.selectedFile);
-		}
 	
 		if (this.myForm.invalid) {
 			return; 
@@ -114,29 +111,29 @@ export class ProfileUpdatePage implements OnInit  {
 		const userString  = localStorage.getItem('user');
 		const user = userString ? JSON.parse(userString) : null;
 
-		const userData = {
-			userId: user.id,
-			firstName: this.myForm.value.f_name,
-			middleName: this.myForm.value.m_name,
-			lastName: this.myForm.value.l_name,
-			birthDate: this.myForm.value.dob,
-			age: this.myForm.value.age,
-			phoneNumber: this.myForm.value.phone_number,
-			avatar: this.myForm.value.avatar,
-			address: this.myForm.value.address,
-			gender: this.myForm.value.gender,
+		const formData: any = new FormData();
+		formData.append('firstName', this.myForm.value.f_name);
+		formData.append('middleName', this.myForm.value.m_name);
+		formData.append('lastName', this.myForm.value.l_name);
+		formData.append('birthDate', this.myForm.value.dob);
+		formData.append('age', this.myForm.value.age);
+		formData.append('phoneNumber', this.myForm.value.phone_number);
+		formData.append('address', this.myForm.value.address);
+		formData.append('gender', this.myForm.value.gender);
+	  
+		if (this.selectedFile) {
+		  formData.append('avatar', this.selectedFile);
 		}
 		
-		this.userService.updateProfile(user.id, userData)
+		this.userService.updateProfile(user.id, formData)
 		.subscribe({
 		next: (data: any) => {
-			console.log('data ', data)
 
 			if (data.status === "success") {
 				this.toastService.presentSuccessToast(data.message);
 				this.loading = false;
 
-				this.navCtrl.navigateForward(PATH.APPOINTMENTS)
+				this.navCtrl.navigateForward(PATH.DOCTORS)
 
 			} else {
 				this.toastService.presentErrorToast(data.message);

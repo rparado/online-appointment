@@ -54,10 +54,9 @@ export class UserService {
 	  }
 	
 	  ///user/profile
-	updateProfile(userId: number, userData: UserProfile): Observable<UserProfile>{
-		return this.http.put<any>(`${this.API_BASE}profile/${userId}/update`, userData).pipe(
+	updateProfile(userId: number, formData: FormData): Observable<any>{
+		return this.http.put<any>(`${this.API_BASE}profile/${userId}/update`, formData).pipe(
 			map((res) => {
-				console.log('res ', res)
 			  if (res.status === 'success') {
 				return res;
 			  } else {

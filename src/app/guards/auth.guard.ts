@@ -1,57 +1,52 @@
 import { Injectable } from '@angular/core';
-import {
-    CanActivate,
-    CanActivateChild,
-    Route,
-    UrlSegment,
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot,
-    UrlTree,
-    CanMatch,
-} from '@angular/router';
-import { firstValueFrom, Observable } from 'rxjs';
-import { UserService } from '../core/services/user/user.service';
-import { NavController } from '@ionic/angular';
-import { PATH } from '@bauerfeind/config/path';
+import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
-/**
- * Guard to prevent logged-out users from accessing main app screens
- */
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanMatch {
-    constructor(
-        private userService: UserService,
-        private navCtrl: NavController,
-    ) {}
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
-    canActivate(
-        _next: ActivatedRouteSnapshot,
-        _state: RouterStateSnapshot,
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.checkAuth();
+  constructor(
+    private router: Router
+  ) {}
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+      return this.checkLogin();
+
+  }
+
+  canActivateChild(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      
+      return this.canActivate(next, state);
+
+  }
+
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+      // console.log('canload')
+      return this.checkLogin();
+
+  }
+
+  async checkLogin(): Promise<boolean> {
+
+    let user = localStorage.getItem('user');
+    let token = localStorage.getItem('token');
+    
+    if(user && token) {
+      //already has a saved user object, can proceed
+      return true;
+    } else {
+      this.router.navigateByUrl(`/login`);
+      return false;
     }
 
-    canActivateChild(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot,
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.canActivate(next, state);
-    }
-
-    canMatch(_route: Route, _segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-        return this.checkAuth();
-    }
-
-    private async checkAuth(): Promise<boolean> {
-        const user = await firstValueFrom(this.userService.getUserFromStorage());
-
-        if (!user) {
-            this.navCtrl.navigateRoot(PATH.INTRO);
-            return false;
-        }
-
-        return true;
-    }
+  }
 }

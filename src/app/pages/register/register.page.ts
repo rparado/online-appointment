@@ -6,6 +6,7 @@ import { UserService } from '@oda/core/services/user/user.service';
 import { PageStandardPage } from '../../layouts/page-standard/page-standard.page';
 import { ToastService } from '@oda/core/services/toast.service';
 import { PATH } from '@oda/config/path';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -30,6 +31,8 @@ export class RegisterPage implements OnInit {
 	});
 	loading: boolean = false;
 	showError = false;
+
+	router = inject(Router);
 
   constructor() { 
 	this.myForm.patchValue({
@@ -58,7 +61,7 @@ export class RegisterPage implements OnInit {
 				this.toastService.presentSuccessToast(data.message);
 				this.loading = false;
 
-				this.navCtrl.navigateForward(PATH.PROFILE)
+				this.router.navigateByUrl(`/apps/profile`);
 
 			} else {
 				this.toastService.presentErrorToast(data.message);

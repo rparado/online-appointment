@@ -5,7 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonButt
 import { PATH } from '@oda/config/path';
 import { Storage } from '@ionic/storage';
 import { StorageService } from '@oda/core/services/storage/storage.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '@oda/core/services/user/user.service';
 import { ToastService } from '@oda/core/services/toast.service';
 
@@ -26,6 +26,8 @@ export class IntroPage implements OnInit {
 	storageService = inject(StorageService);
 
 	userService = inject(UserService);
+
+	router = inject(Router);
 	
 	
 	myForm: FormGroup = this.fb.group({
@@ -62,11 +64,8 @@ export class IntroPage implements OnInit {
 					this.toastService.presentSuccessToast(data.message);
 					this.loading = false;
 	
-					if(data.user.isProfileUpdated == 0 ) {
-						this.navCtrl.navigateForward(PATH.PROFILE)
-					} else {
-						this.navCtrl.navigateForward(PATH.DOCTORS)
-					}
+					const targetTab = data.user.isProfileUpdated === 0 ? 'profile' : 'doctors';
+					this.router.navigateByUrl(`/apps/${targetTab}`);
 						
 	
 				} else {

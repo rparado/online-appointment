@@ -19,24 +19,30 @@ export const routes: Routes = [
     path: PATH.REGISTER,
     loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
   },
+  // {
+  //   path: 'profile',
+  //   loadChildren: () => import('./pages/profile-update/profile.route'),
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'appointment',
+  //   loadChildren: () => import('./pages/appointment/appointment.route'),
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'doctors',
+  //   loadChildren: () => import('./pages/doctors/doctor.route'),
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'doctor-detail/:id',
+  //   loadChildren: () => import('./pages/doctors/doctor-detail/doctor-detail.page'),
+  //   canActivate: [AuthGuard],
+  // },
   {
-    path: 'profile',
-    loadComponent: () => import('./pages/profile-update/profile-update.page').then( m => m.ProfileUpdatePage),
-    canActivate: [AuthGuard],
+      path: 'apps',
+      canActivate: [AuthGuard],
+      children: [{ path: '', loadChildren: () => import('./layouts/main/main.routes') }],
   },
-  {
-    path: 'appointment',
-    loadComponent: () => import('./pages/appointment/appointment.page').then( m => m.AppointmentPage),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'doctors',
-    loadComponent: () => import('./pages/doctors/doctors.page').then( m => m.DoctorsPage),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'doctor-detail/:id',
-    loadComponent: () => import('./pages/doctors/doctor-detail/doctor-detail.page').then( m => m.DoctorDetailPage),
-    canActivate: [AuthGuard],
-  },
+  { path: '**', redirectTo: PATH.INTRO, pathMatch: 'full' },
 ];

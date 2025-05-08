@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { closeOutline, checkmarkCircleOutline, warningOutline } from 'ionicons/icons';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,16 @@ export class ToastService {
   async presentErrorToast(message: string) {
     const toast = await this.toastCtrl.create({
       message: message,
-      duration: 5000,
+      duration: 3000,
       position: 'top',
       color: 'danger',
-      icon: 'close-circle-outline',
+      icon: warningOutline,
+      buttons: [
+        {
+          icon: closeOutline,
+          role: 'cancel'
+        }
+      ]
     });
 
     await toast.present();
@@ -21,10 +28,16 @@ export class ToastService {
   async presentSuccessToast(message: string) {
     const toast = await this.toastCtrl.create({
       message: message,
-      duration: 5000,
+      duration: 3000,
       position: 'top',
       color: 'success',
-      icon: 'checkmark-circle-outline',
+      icon: checkmarkCircleOutline,
+      buttons: [
+        {
+          icon: closeOutline,
+          role: 'cancel'
+        }
+      ]
     });
 
     await toast.present();

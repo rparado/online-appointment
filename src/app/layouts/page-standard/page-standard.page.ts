@@ -76,6 +76,6 @@ export class PageStandardPage {
 		this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
 	}
 	profilePage() {
-		this.navCtrl.navigateRoot([`${PATH.PROFILE}`]);
+		this.navCtrl.navigateRoot([`/apps/${PATH.PROFILE}`]);
 	}
 }	

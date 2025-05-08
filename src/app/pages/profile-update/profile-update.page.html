@@ -1,25 +1,26 @@
-<app-page-standard [loading]="loading" backButtonDefaultHref="login" class="ion-page" [showProfileBtn]="true" [pageTitle]="'Profile'">
+<app-page-standard [loading]="loading"  class="ion-page"  [showBackButton]="false" [showProfileBtn]="false" [pageTitle]="'Profile'">
 	<ng-container main-content>
 		<h1 class="ion-margin-bottom">Update your profile.</h1>
 		<br />
 			<div class="form-container">
 				<form [formGroup]="myForm" enctype="multipart/form-data">
 					<div class="input-wrapper ion-margin-bottom">
-						<div class="input-wrapper ion-margin-bottom">
-							<ion-label>Upload or capture your photo <ion-text color="danger">(Required)</ion-text></ion-label>
-							<input 
-								type="file" 
-								id="image" 
-								accept="image/*" 
-								capture="environment" 
-								(change)="onFileSelected($event)"
-								formControlName="avatar"
-								/>
-							<div *ngIf="imagePreview" class="image-preview ">
-								<ion-label>Preview</ion-label>
-								<img [src]="imagePreview" alt="Image preview" />
-							</div>
+						<ion-label>Upload or capture your photo <ion-text color="danger">(Required)</ion-text></ion-label>
+						<input 
+							type="file" 
+							id="image" 
+							accept="image/*" 
+							capture="environment" 
+							(change)="onFileSelected($event)"
+							formControlName="avatar"
+							/>
+						<div *ngIf="imagePreview" class="image-preview ">
+							<ion-label>Preview</ion-label>
+							<img [src]="imagePreview" alt="Image preview" />
 						</div>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						
 						<ion-label>First Name <ion-text color="danger">(Required)</ion-text></ion-label>
 						<ion-input  
 							type="text"  

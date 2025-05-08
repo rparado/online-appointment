@@ -1,4 +1,4 @@
-<app-page-standard [loading]="loading"  backButtonDefaultHref="doctors" class="ion-page" [showProfileBtn]="true" [pageTitle]="doctor?.profile?.firstName + ' ' + doctor?.profile?.middleName + ' ' + doctor?.profile?.lastName">
+<app-page-standard [loading]="loading"  backButtonDefaultHref="doctors" class="ion-page" [showProfileBtn]="true" [pageTitle]="'Dr. ' + doctor?.profile?.firstName + ' ' + doctor?.profile?.middleName + ' ' + doctor?.profile?.lastName">
 	<ng-container main-content>
 		<ion-img
 			class="ion-margin-bottom"
@@ -18,14 +18,62 @@
 				</ion-card-content>
 			  </ion-card>
 		}
+
+		<ion-modal trigger="create-appointment">
+			<ng-template>
+			  <ion-header>
+				<ion-toolbar>
+				  <ion-buttons slot="start">
+					<ion-button (click)="cancel()">Cancel</ion-button>
+				  </ion-buttons>
+				  <ion-title>Dr. {{doctor?.profile?.firstName + ' ' + doctor?.profile?.middleName + ' ' + doctor?.profile?.lastName}}</ion-title>
+				  <ion-buttons slot="end">
+					<ion-button (click)="confirm()" [strong]="true">Book</ion-button>
+				  </ion-buttons>
+				</ion-toolbar>
+			  </ion-header>
+			  <ion-content class="ion-padding">
+				<form [formGroup]="myForm" enctype="multipart/form-data">
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Appointment Date <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input
+							readonly
+							[value]="appointmentDateDisplay"
+							formControlName="appointment_date"
+							(click)="showDatePicker = true">
+						</ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Time Slot <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-select [value]="selectedSlot" (ionChange)="onSlotChange($event)" formControlName="time_slot" interface="action-sheet">
+							<ion-select-option *ngFor="let slot of availableSlots" [value]="slot">
+							  {{ slot }}
+							</ion-select-option>
+						  </ion-select>
+					</div>
+				</form>
+			  </ion-content>
+			</ng-template>
+		  </ion-modal>
+		  <ion-modal [isOpen]="showDatePicker" (didDismiss)="showDatePicker = false">
+			<ng-template>
+			  <ion-datetime
+				presentation="date"
+				(ionChange)="onDateChange($event)"
+				[value]="myForm.get('appointment_date')?.value"
+				show-default-buttons="true"
+				[min]="today"
+			  ></ion-datetime>
+			</ng-template>
+		  </ion-modal>
 	</ng-container>
 	<ng-container footer-action>
 		<ion-button 
 			expand="block" 
 			color="primary" 
-			(click)="submit()" 
 			shape="round"
-			[disabled]="myForm.invalid || loading"
+			id="create-appointment"
+		
 		>Create Appointment</ion-button>
 	</ng-container>
 </app-page-standard>

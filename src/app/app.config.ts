@@ -4,13 +4,13 @@ import { Drivers } from '@ionic/storage';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { AuthTokenInvalidInterceptor } from "./interceptors/auth.token.invalid.interceptor";
 import { AuthTokenInterceptor } from "./interceptors/auth.token.interceptor";
-//import { ApiErrorMessageInterceptor } from "./interceptors/api.error.message.interceptor";
 import { AppInitializer } from "./app-initializer";
 import { StorageService } from "@oda/core/services/storage/storage.service";
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withInMemoryScrolling, withPreloading } from "@angular/router";
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { ApiErrorInterceptor } from "./interceptors/api.error.message.interceptor";
 
 const EnvironmentConfig = importProvidersFrom([
     IonicStorageModule.forRoot({
@@ -52,11 +52,11 @@ export const AppConfig: ApplicationConfig = {
             const initializerFn = AppInitializer(inject(StorageService));
             return initializerFn();
         }),
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: ApiErrorMessageInterceptor,
-        //     multi: true,
-        // },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ApiErrorInterceptor,
+            multi: true,
+        },
         
     ],
 }

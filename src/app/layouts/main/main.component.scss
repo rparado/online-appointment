@@ -1,0 +1,33 @@
+ion-tab-bar {
+    --border: 0 none;
+    height: 5rem;
+    gap: 0.5rem;
+
+    ion-icon {
+        font-size: 1.25rem;
+    }
+    ion-tab-button {
+        height: 3.4375rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        --color: var(--ion-color-primary);
+        opacity: 0.8;
+
+        .indicator {
+            width: 4rem;
+            min-height: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &.tab-selected {
+            opacity: 1;
+
+            .indicator {
+                background: rgba(33, 183, 208, 0.1);
+            }
+        }
+    }
+}

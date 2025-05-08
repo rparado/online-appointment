@@ -1,30 +1,19 @@
-// import { Injectable } from '@angular/core';
-// import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 
-// import { Observable } from 'rxjs';
-// import { catchError } from 'rxjs/operators';
-// import { environment } from 'src/environments/environment';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-// import { DialogService } from '../core/services/dialog/dialog.service';
+@Injectable()
+export class ApiErrorInterceptor implements HttpInterceptor {
+    constructor() {}
 
-// @Injectable()
-// export class ApiErrorMessageInterceptor implements HttpInterceptor {
-//     constructor(private dialogService: DialogService) {}
-
-//     private API_BASE = environment.apiUrl;
-
-//     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//         return next.handle(request).pipe(
-//             catchError((error: HttpErrorResponse) => {
-//                 //show generic message modal
-//                 this.dialogService
-//                     .openMessageDialog({
-//                         headingText: 'Error processing request. Please try again.',
-//                     })
-//                     .subscribe((confirm) => {});
-
-//                 throw new Error(error.status + ': ' + request.url);
-//             }),
-//         );
-//     }
-// }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return next.handle(req).pipe(
+          catchError((error: HttpErrorResponse) => {
+            // Just rethrow to let component handle it
+            return throwError(() => error);
+          })
+        );
+      }
+}

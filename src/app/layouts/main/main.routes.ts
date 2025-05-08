@@ -20,6 +20,10 @@ export default [
                 loadComponent: () => import('../../pages/doctors/doctors.page').then(m => m.DoctorsPage)
               },
               {
+                path: 'doctor-detail/:id',
+                loadComponent: () => import('../../pages/doctors/doctor-detail/doctor-detail.page').then(m => m.DoctorDetailPage)
+              },
+              {
                 path: '',
                 redirectTo: 'profile',
                 pathMatch: 'full'

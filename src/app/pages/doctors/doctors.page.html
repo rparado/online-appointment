@@ -4,7 +4,7 @@
 		<br />
 		<ion-list>
 			@for (item of doctorList; track item; let index = $index) {
-			<ion-item routerLink="/doctor-detail/{{ item.id }}" >
+			<ion-item [routerLink]="['/apps/doctor-detail', item.id]">
 			  <ion-avatar slot="start">
 				@if(item.profile.avatar) {
 					<img [src]="item.profile.avatar" alt="avatar" />

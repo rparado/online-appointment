@@ -1,5 +1,36 @@
 <app-page-standard [loading]="loading"  [showBackButton]="false" class="ion-page" [showProfileBtn]="true" [pageTitle]="'Appointments'" [showFooter]="false">
 	<ng-container main-content>
 		<h4>Here are the list of your appointments.</h4>
+		@for (item of appointments; track item?.doctor?.id) {
+			<ion-card>
+				<ion-card-header>
+				  <ion-card-title>
+					Dr. {{ item?.doctor?.userProfile.firstName }} {{ item?.doctor?.userProfile.middleName }} {{ item?.doctor?.userProfile.lastName }}
+				  </ion-card-title>
+				  <ion-card-subtitle>
+					{{ item?.doctor?.Specialization.name }}
+				  </ion-card-subtitle>
+				</ion-card-header>
+			  
+				<ion-card-content>
+				  <ion-list>
+					@for (appt of item.appointments; track appt.id) {
+					  <ion-item>
+						<ion-label>
+						  <h3><strong>Date :</strong> {{ appt.appointmentDate | date: 'MMMM d, y' }}</h3>
+						  <p><strong>Time:</strong> {{ appt.timeslot }}</p>
+						  <p><strong>Queue #:</strong> {{ appt.queueNumber }}</p>
+						  <p><strong>Status:</strong> {{ appt.status | titlecase}}</p>
+						</ion-label>
+					  </ion-item>
+					  <ion-button fill="clear" (click)="cancelAppointment(appt.id)">Cancel</ion-button>
+					  <ion-button fill="clear" (click)="changeAppointment(appt.id)">Change</ion-button>
+					}
+				  </ion-list>
+				</ion-card-content>
+			  
+			  </ion-card>
+		}
+		
 	</ng-container>
 </app-page-standard>

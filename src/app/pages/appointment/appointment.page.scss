@@ -1,4 +1,24 @@
 ion-card-title {
     font-size: 1.375rem;
+}
+ion-item {
+    --border-color: transparent;
+    --inner-border-width: 0;
+}
+ion-buttons {
+    cursor: pointer;
+}
+ion-card {
+    background: #fff;
 
+}
+ion-card-content {
+    padding-left: 0;
+    padding-right: 0;
+}
+.ion-color-danger,
+.ion-color-primary {
+    h3 {
+        color: #fff;
+    }
 }

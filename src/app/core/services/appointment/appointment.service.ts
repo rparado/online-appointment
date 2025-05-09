@@ -35,6 +35,6 @@ export class AppointmentService {
 	}
 
 	updateAppointment(id: number, data: Partial<Appointment>): Observable<any> {
-		return this.http.put(`${this.API_BASE}appointments/${id}`, data);
+		return this.http.put(`${this.API_BASE}appointments/change/${id}`, data);
 	}
 }

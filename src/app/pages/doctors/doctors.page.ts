@@ -10,26 +10,26 @@ import { RouterModule } from '@angular/router';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'app-doctors',
-  templateUrl: './doctors.page.html',
-  styleUrls: ['./doctors.page.scss'],
-  standalone: true,
-  imports: [IonInfiniteScrollContent, IonInfiniteScroll, IonAvatar, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PageStandardPage, IonList, IonLabel, InitialsPipe, RouterModule]
+	selector: 'app-doctors',
+	templateUrl: './doctors.page.html',
+	styleUrls: ['./doctors.page.scss'],
+	standalone: true,
+	imports: [IonInfiniteScrollContent, IonInfiniteScroll, IonAvatar, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PageStandardPage, IonList, IonLabel, InitialsPipe, RouterModule]
 })
 export class DoctorsPage implements OnInit {
-  loading: boolean = false;
+	loading: boolean = false;
 
-  doctors = inject(DoctorService);
+	doctors = inject(DoctorService);
 
-  doctorList: any[] = [];
+	doctorList: any[] = [];
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit() {
+	ngOnInit() {
 	this.getDoctors();
-  }
+	}
 
-  getDoctors() {
+	getDoctors() {
 	this.loading = true;
 
 	this.doctors.getDoctors()
@@ -37,28 +37,26 @@ export class DoctorsPage implements OnInit {
 			finalize(() => setTimeout(() => this.loading = false, 1000))
 		)
 		.subscribe({
-		next: (doctors: Doctor[]) => {
+			next: (doctors: Doctor[]) => {
+				this.doctorList = doctors;
 
-      console.log('doctors ', doctors)
-		  this.doctorList = doctors;
-
-		},
-		error: (err) => {
-		  console.error('Failed to load doctors:', err.message);
+			},
+			error: (err) => {
+				console.error('Failed to load doctors:', err.message);
+			}
+		});
+	}
+	private generateItems() {
+		const count = this.doctorList.length + 1;
+		for (let i = 0; i < 50; i++) {
+			this.doctorList.push(`Item ${count + i}`);
 		}
-	  });
-  }
-  private generateItems() {
-    const count = this.doctorList.length + 1;
-    for (let i = 0; i < 50; i++) {
-      this.doctorList.push(`Item ${count + i}`);
-    }
-  }
-  onIonInfinite(event: InfiniteScrollCustomEvent) {
+	}
+	onIonInfinite(event: InfiniteScrollCustomEvent) {
 	this.generateItems();
-    setTimeout(() => {
-      event.target.complete();
-    }, 500);
-  }
+		setTimeout(() => {
+			event.target.complete();
+		}, 500);
+	}
 
 }

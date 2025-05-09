@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonImg, IonRow, IonGrid, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonCardSubtitle, IonButtons, IonModal, IonItem, IonLabel, IonText, IonInput, IonDatetime, IonSelectOption, IonSelect, NavController } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DoctorService } from '@oda/core/services/doctors/doctor.service';
 import { finalize } from 'rxjs';
 import { Doctor } from 'src/app/models/Doctor';
@@ -29,6 +29,8 @@ export class DoctorDetailPage implements OnInit {
 	fb = inject(FormBuilder);
 
 	route = inject(ActivatedRoute);
+
+	router = inject(Router);
 
 	doctorService = inject(DoctorService);
 
@@ -113,18 +115,17 @@ export class DoctorDetailPage implements OnInit {
 			timeslot: this.myForm.value.time_slot,
 			status: "pending"
 		}
-		console.log('data ', data)
 		this.appointmentService.bookAppointment(data)
 		.pipe(
 			finalize(() => setTimeout(() => this.loading = false, 1000))
 		)
 		 .subscribe({
 				next: (data) => {
-					console.log('data ', data)
 					if (data.status === "success") {
 						this.toastService.presentSuccessToast(data.message);
 						this.loading = false;
 						this.modal.dismiss();
+						this.router.navigateByUrl('/apps/appointments');
 		
 					} else {
 						console.log('else')

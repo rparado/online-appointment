@@ -31,6 +31,8 @@ export class PageStandardPage {
 
 	showBackButton = input(true);
 
+	showFooter = input(true);
+
 	backButtonDefaultHref = input(PATH.APP_REDIRECTION);
 
 	showProfileBtn = input(false);

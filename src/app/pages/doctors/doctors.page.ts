@@ -38,6 +38,8 @@ export class DoctorsPage implements OnInit {
 		)
 		.subscribe({
 		next: (doctors: Doctor[]) => {
+
+      console.log('doctors ', doctors)
 		  this.doctorList = doctors;
 
 		},

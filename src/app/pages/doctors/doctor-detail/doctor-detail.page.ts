@@ -86,6 +86,7 @@ export class DoctorDetailPage implements OnInit {
 		)
 		.subscribe({
 			next: (doctor: Doctor) => {
+				console.log('doctor ', doctor)
 				this.doctor = doctor;
 			},
 			error: (err) => {
@@ -102,14 +103,17 @@ export class DoctorDetailPage implements OnInit {
 	}
 
 	confirm() {
+		const userStr:any  = localStorage.getItem('user');
+		const user = JSON.parse(userStr);
+
 		let data:any = {
-			patientId: this.doctor?.userId,
+			patientId: user?.id,
 			doctorId: this.doctor?.id,
 			appointmentDate: this.myForm.value.appointment_date,
 			timeslot: this.myForm.value.time_slot,
 			status: "pending"
 		}
-
+		console.log('data ', data)
 		this.appointmentService.bookAppointment(data)
 		.pipe(
 			finalize(() => setTimeout(() => this.loading = false, 1000))

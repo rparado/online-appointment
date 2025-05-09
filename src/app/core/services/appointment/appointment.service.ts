@@ -19,7 +19,7 @@ export class AppointmentService {
 	}
 
 	getAllAppointments(): Observable<Appointment[]> {
-		return this.http.get<Appointment[]>(`${this.API_BASE}`);
+		return this.http.get<Appointment[]>(`${this.API_BASE}appointments/patients`);
 	}
 
 	getDoctorAppointments(doctorId: number, date: string): Observable<Appointment[]> {

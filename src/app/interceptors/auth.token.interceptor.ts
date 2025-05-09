@@ -11,7 +11,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
     private interceptUrls = [
         'profile',
-        'appointment',
+        'appointments',
         'doctors',
         'payment'
     ];

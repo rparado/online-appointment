@@ -6,6 +6,7 @@ import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.pa
 import { ToastService } from '@oda/core/services/toast.service';
 import { UserService } from '@oda/core/services/user/user.service';
 import { PATH } from '@oda/config/path';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-profile-update',
@@ -55,11 +56,46 @@ export class ProfileUpdatePage implements OnInit  {
 	
 	today: string = '';
 
+	router = inject(Router);
+
 	constructor() { }
 
 	ngOnInit() {
 		const now = new Date();
   		this.today = now.toISOString().split('T')[0];
+
+		this.populateForm();
+	}
+
+	populateForm() {
+		const userJson = localStorage.getItem('user');
+		const user = userJson ? JSON.parse(userJson) : null;
+
+		this.userService.getUserProfile(user.id)
+		.subscribe({
+			next: (resp: any) => {
+
+				if(resp.data.isProfileUpdated === 1) {
+					this.myForm.patchValue({
+						f_name: resp.data.UserProfile.firstName,
+						m_name:resp.data.UserProfile.middleName,
+						l_name:resp.data.UserProfile.lastName,
+						dob: resp.data.UserProfile.birthDate,
+						age: resp.data.UserProfile.age,
+						phone_number: resp.data.UserProfile.phoneNumber,
+						address: resp.data.UserProfile.address,
+						gender: resp.data.UserProfile.gender,
+					})
+
+					this.imagePreview = resp.data.UserProfile.avatar || null;
+				}
+			},
+			error: (err) => {
+				console.log(err);
+				this.toastService.presentErrorToast('Error in submitting');
+				this.loading = false;
+			}
+		})
 	}
 
 
@@ -133,7 +169,9 @@ export class ProfileUpdatePage implements OnInit  {
 				this.toastService.presentSuccessToast(data.message);
 				this.loading = false;
 
-				this.navCtrl.navigateForward(PATH.DOCTORS)
+				localStorage.setItem('user', user)
+
+				this.router.navigateByUrl(`/apps/doctors`);
 
 			} else {
 				this.toastService.presentErrorToast(data.message);

@@ -1,5 +1,8 @@
 <app-page-standard [loading]="loading"  [showBackButton]="false" class="ion-page" [showProfileBtn]="true" [pageTitle]="'Appointments'" [showFooter]="false">
 	<ng-container main-content>
+		<ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+			<ion-refresher-content></ion-refresher-content>
+		  </ion-refresher>
 		<h4>Here are the list of your appointments.</h4>
 		@for (item of appointments; track item?.doctor?.id) {
 			<ion-card>

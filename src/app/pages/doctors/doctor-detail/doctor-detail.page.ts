@@ -52,7 +52,6 @@ export class DoctorDetailPage implements OnInit {
 
 	appointmentDateDisplay: string = '';
 
-
 	toastService = inject(ToastService);
 	
 	appointmentDate = new Date().toISOString().split('T')[0];
@@ -125,10 +124,10 @@ export class DoctorDetailPage implements OnInit {
 						this.toastService.presentSuccessToast(data.message);
 						this.loading = false;
 						this.modal.dismiss();
+						this.appointmentService.shouldRefresh.next(true);
 						this.router.navigateByUrl('/apps/appointments');
 		
 					} else {
-						console.log('else')
 						this.toastService.presentErrorToast(data.message);
 						this.loading = false;
 						this.modal.dismiss();
@@ -145,11 +144,9 @@ export class DoctorDetailPage implements OnInit {
 
 		if (!rawDate) return;
 
-		// Convert to local date object
-		const date = new Date(rawDate);
 
 		// Format as YYYY-MM-DD (local date only)
-		const formattedDate = date.toISOString().split('T')[0];
+		const formattedDate = rawDate.split('T')[0];
 
 		this.appointmentDateDisplay = formattedDate;
 		this.myForm.get('appointment_date')?.setValue(formattedDate);

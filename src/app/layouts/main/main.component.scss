@@ -29,5 +29,11 @@ ion-tab-bar {
                 background: rgba(33, 183, 208, 0.1);
             }
         }
+        &.tab-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: default;
+            --color: var(--ion-color-medium);
+        }
     }
 }

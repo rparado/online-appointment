@@ -66,5 +66,15 @@ export class UserService {
 		  );
 	}
 
-
+	getUserProfile(id: any) {
+		return this.http.get<any>(`${this.API_BASE}users/${id}/profile`).pipe(
+			map((res) => {
+			  if (res.status === 'success') {
+				return res;
+			  } else {
+				throw new Error(res.message);
+			  }
+			})
+		  );
+	}
 }

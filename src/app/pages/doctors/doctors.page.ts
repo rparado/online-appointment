@@ -26,7 +26,7 @@ export class DoctorsPage implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
-	this.getDoctors();
+		this.getDoctors();
 	}
 
 	getDoctors() {

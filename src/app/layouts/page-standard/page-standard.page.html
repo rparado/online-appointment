@@ -12,11 +12,7 @@
       @if (pageTitle()) {
           <ion-title>{{ pageTitle() }}</ion-title>
       }
-      @if(showProfileBtn()){
-            <ion-buttons slot="end" (click)="presentActionSheet()">
-                <ion-icon [icon]="settingsIcon" color="primary"></ion-icon>
-            </ion-buttons>
-        }
+
   </ion-toolbar>
   @if (loading()) {
       <ion-progress-bar type="indeterminate" class="loading-bar"></ion-progress-bar>

@@ -6,19 +6,19 @@
           </div>
           Profile
       </ion-tab-button>
-      <ion-tab-button tab="doctors">
+      <ion-tab-button tab="doctors" [disabled]="isProfileUpdated === 0">
           <div class="indicator">
             <ion-icon [icon]="doctorsIcon"></ion-icon>
           </div>
           Doctor
       </ion-tab-button>
-      <ion-tab-button tab="appointments">
+      <ion-tab-button tab="appointments" [disabled]="isProfileUpdated === 0">
           <div class="indicator">
             <ion-icon [icon]="appointmentsIcon"></ion-icon>
           </div>
           Appointments
       </ion-tab-button>
-      <ion-tab-button tab="settings">
+      <ion-tab-button (click)="presentActionSheet()">
           <div class="indicator">
             <ion-icon [icon]="settingsIcon"></ion-icon>
           </div>

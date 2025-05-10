@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Appointment } from 'src/app/models/appointment';
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +11,8 @@ export class AppointmentService {
 	private API_BASE = environment.apiUrl;
 		
 	private http = inject(HttpClient);
+
+	public shouldRefresh = new BehaviorSubject<boolean>(false);
 	
 	constructor() { }
 

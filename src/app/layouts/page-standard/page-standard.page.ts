@@ -37,47 +37,11 @@ export class PageStandardPage {
 
 	showProfileBtn = input(false);
 
-	actionSheetCtrl = inject(ActionSheetController);
 
-	storageService = inject(StorageService);
 
 	userService = inject(UserService);
 
-	navCtrl = inject(NavController);
 
 	constructor() { }
 
-	
-	async presentActionSheet() {
-		const actionSheet = await this.actionSheetCtrl.create({
-		  header: 'Options',
-		  mode: 'md',
-		  buttons: [
-			
-			{
-				text: 'Profile',
-				handler: () => {
-					this.profilePage(); 
-				},
-			},
-			{
-				text: 'Logout',
-				role: 'destructive',
-				handler: () => {
-					this.logout(); 
-				},
-			},
-		  ],
-		});
-	
-		await actionSheet.present();
-	  }
-	async logout() {
-		localStorage.removeItem('token');
-		localStorage.removeItem('user');
-		this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
-	}
-	profilePage() {
-		this.navCtrl.navigateRoot([`/apps/${PATH.PROFILE}`]);
-	}
 }	

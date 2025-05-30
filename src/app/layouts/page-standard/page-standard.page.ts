@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
     IonProgressBar,
     IonContent,
@@ -7,11 +7,10 @@ import {
     IonButtons,
     IonBackButton,
     IonTitle,
-    IonFooter, IonIcon, IonButton, ActionSheetController, NavController } from '@ionic/angular/standalone';
+    IonFooter} from '@ionic/angular/standalone';
 import { PATH } from '../../configs/path';
 
 import { settingsOutline } from 'ionicons/icons';
-import { StorageService } from '@oda/core/services/storage/storage.service';
 import { UserService } from '@oda/core/services/user/user.service';
 
 @Component({
@@ -19,7 +18,7 @@ import { UserService } from '@oda/core/services/user/user.service';
 	templateUrl: './page-standard.page.html',
 	styleUrls: ['./page-standard.page.scss'],
 	standalone: true,
-	imports: [IonButton, IonIcon, IonFooter, IonTitle, IonBackButton, IonButtons, IonToolbar, IonHeader, IonProgressBar, IonContent]
+	imports: [IonFooter, IonTitle, IonBackButton, IonButtons, IonToolbar, IonHeader, IonProgressBar, IonContent]
 })
 export class PageStandardPage {
 

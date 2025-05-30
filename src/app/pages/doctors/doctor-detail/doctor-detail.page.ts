@@ -1,14 +1,13 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonImg, IonRow, IonGrid, IonCol, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonCardSubtitle, IonButtons, IonModal, IonItem, IonLabel, IonText, IonInput, IonDatetime, IonSelectOption, IonSelect, NavController } from '@ionic/angular/standalone';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonContent, IonButton, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonModal,IonLabel, IonText, IonInput, IonDatetime, IonSelectOption, IonSelect, NavController } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DoctorService } from '@oda/core/services/doctors/doctor.service';
 import { finalize } from 'rxjs';
 import { Doctor } from 'src/app/models/Doctor';
 
-import { OverlayEventDetail } from '@ionic/core/components';
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { ToastService } from '@oda/core/services/toast.service';
 
@@ -17,7 +16,7 @@ import { ToastService } from '@oda/core/services/toast.service';
 	templateUrl: './doctor-detail.page.html',
 	styleUrls: ['./doctor-detail.page.scss'],
 	standalone: true,
-	imports: [IonDatetime, IonInput, IonText, IonLabel, IonItem, IonModal, IonButtons, IonCardSubtitle, IonCardTitle, IonCardContent, IonCardHeader, IonCard, IonRow, IonImg, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,PageStandardPage, IonGrid, IonCol, ReactiveFormsModule, IonSelectOption, IonSelect ]
+	imports: [IonDatetime, IonInput, IonText, IonLabel, IonModal, IonCardSubtitle,  IonCardContent, IonCardHeader, IonCard, IonImg, IonButton, IonContent, CommonModule, FormsModule,PageStandardPage, ReactiveFormsModule, IonSelectOption, IonSelect ]
 })
 export class DoctorDetailPage implements OnInit {
 

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonLabel, IonItem, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonBadge, IonCard, IonSelect, IonSelectOption, IonButton, IonButtons, IonModal, IonDatetime, IonFabButton, IonIcon, IonFab, IonList, IonText, ActionSheetController, IonTextarea } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonLabel, IonItem, IonCardHeader, IonCardTitle, IonCardContent,IonCard, IonSelect, IonSelectOption, IonButton, IonButtons, IonModal, IonDatetime, IonFabButton, IonIcon, IonFab, IonList, IonText, ActionSheetController, IonTextarea } from '@ionic/angular/standalone';
 import { PageStandardPage } from "../../layouts/page-standard/page-standard.page";
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ import { ToastService } from '@oda/core/services/toast.service';
 	templateUrl: './doctors-appointment.page.html',
 	styleUrls: ['./doctors-appointment.page.scss'],
 	standalone: true,
-	imports: [IonTextarea, IonText, IonList, IonFab, IonIcon, IonFabButton, IonDatetime, IonButtons, IonButton, IonCard, IonBadge, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonItem, IonLabel, IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PageStandardPage, IonSelect, IonSelectOption, IonModal, ReactiveFormsModule, FormsModule]
+	imports: [IonTextarea, IonText, IonList, IonFab, IonIcon, IonFabButton, IonDatetime, IonButtons, IonButton, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonItem, IonLabel, IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PageStandardPage, IonSelect, IonSelectOption, IonModal, ReactiveFormsModule, FormsModule]
 })
 export class DoctorsAppointmentPage implements OnInit {
 	loading: boolean = false;

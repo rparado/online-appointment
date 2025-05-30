@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonAvatar, IonInfiniteScroll, InfiniteScrollCustomEvent, IonList, IonLabel, IonInfiniteScrollContent } from '@ionic/angular/standalone';
+import {  IonItem, IonAvatar, IonInfiniteScroll, InfiniteScrollCustomEvent, IonList, IonLabel, IonInfiniteScrollContent } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { DoctorService } from '@oda/core/services/doctors/doctor.service';
 import { Doctor } from 'src/app/models/Doctor';
@@ -14,7 +14,7 @@ import { finalize } from 'rxjs';
 	templateUrl: './doctors.page.html',
 	styleUrls: ['./doctors.page.scss'],
 	standalone: true,
-	imports: [IonInfiniteScrollContent, IonInfiniteScroll, IonAvatar, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PageStandardPage, IonList, IonLabel, InitialsPipe, RouterModule]
+	imports: [IonInfiniteScrollContent, IonInfiniteScroll, IonAvatar, IonItem,  CommonModule, FormsModule, PageStandardPage, IonList, IonLabel, InitialsPipe, RouterModule]
 })
 export class DoctorsPage implements OnInit {
 	loading: boolean = false;

@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonItem, IonInput, IonNav, IonLabel, NavController } from '@ionic/angular/standalone';
+import { IonButton, IonInput, IonLabel, NavController } from '@ionic/angular/standalone';
 import { UserService } from '@oda/core/services/user/user.service';
 import { PageStandardPage } from '../../layouts/page-standard/page-standard.page';
 import { ToastService } from '@oda/core/services/toast.service';
-import { PATH } from '@oda/config/path';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, ReactiveFormsModule, IonInput, IonNav, PageStandardPage, IonLabel ]
+  imports: [IonButton, CommonModule, FormsModule, ReactiveFormsModule, IonInput, PageStandardPage, IonLabel ]
 })
 export class RegisterPage implements OnInit {
 	fb = inject(FormBuilder);

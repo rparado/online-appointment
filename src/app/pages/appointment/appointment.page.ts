@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {  Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonDatetime, IonModal, IonImg, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonButtons, IonSelectOption, IonCardTitle, IonItem, IonLabel, IonList, IonText, IonIcon, ActionSheetController, IonSelect, IonInput, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonModal, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonItem, IonLabel, IonList, ActionSheetController, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { finalize, Subject,} from 'rxjs';
@@ -13,7 +13,7 @@ import { ToastService } from '@oda/core/services/toast.service';
   templateUrl: './appointment.page.html',
   styleUrls: ['./appointment.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonIcon, IonText, IonList, IonLabel, IonItem, IonCardTitle, IonButtons, IonCardContent, IonCardSubtitle, IonCardHeader, IonCard, IonImg, IonModal, IonDatetime, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PageStandardPage, IonCardSubtitle, ReactiveFormsModule, IonSelectOption, IonSelect, IonInput]
+  imports: [IonRefresherContent, IonRefresher, IonList, IonLabel, IonItem, IonCardTitle, IonCardContent, IonCardSubtitle, IonCardHeader, IonCard,CommonModule, FormsModule, PageStandardPage, IonCardSubtitle, ReactiveFormsModule]
 })
 export class AppointmentPage implements OnInit {
 	loading: boolean = false;

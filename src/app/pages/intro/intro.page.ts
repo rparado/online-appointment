@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonButton, NavController, IonFooter, IonButtons, IonIcon, IonImg, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonToolbar, IonInput, IonButton, NavController, IonFooter, IonImg, IonLabel } from '@ionic/angular/standalone';
 import { PATH } from '@oda/config/path';
 import { Storage } from '@ionic/storage';
 import { StorageService } from '@oda/core/services/storage/storage.service';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserService } from '@oda/core/services/user/user.service';
 import { ToastService } from '@oda/core/services/toast.service';
 
@@ -14,7 +14,7 @@ import { ToastService } from '@oda/core/services/toast.service';
 	templateUrl: './intro.page.html',
 	styleUrls: ['./intro.page.scss'],
 	standalone: true,
-	imports: [IonLabel, IonImg, IonIcon, IonButtons, IonInput, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonButton,  ReactiveFormsModule, IonFooter, RouterModule ]
+	imports: [IonLabel, IonImg,IonInput, IonContent, IonToolbar, CommonModule, FormsModule, IonButton,  ReactiveFormsModule, IonFooter, RouterModule ]
 })
 export class IntroPage implements OnInit {
 	navCtrl = inject(NavController);
@@ -60,7 +60,6 @@ export class IntroPage implements OnInit {
 		  this.userService.login(email, password)
 		  .subscribe({
 			next: (data) => {
-				console.log('data ', data)
 				if (data.status === "success") {
 					this.toastService.presentSuccessToast(data.message);
 					this.loading = false;

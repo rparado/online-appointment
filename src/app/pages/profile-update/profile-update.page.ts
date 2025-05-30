@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonInput, IonNav, IonLabel, IonButton, NavController, IonDatetime, IonModal, IonRadioGroup, IonRadio, IonItem, IonText } from '@ionic/angular/standalone';
+import { IonInput, IonLabel, IonButton, NavController, IonDatetime, IonModal, IonRadioGroup, IonRadio, IonItem, IonText } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { ToastService } from '@oda/core/services/toast.service';
 import { UserService } from '@oda/core/services/user/user.service';
-import { PATH } from '@oda/config/path';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +12,7 @@ import { Router } from '@angular/router';
 	templateUrl: './profile-update.page.html',
 	styleUrls: ['./profile-update.page.scss'],
 	standalone: true,
-	imports: [IonText, IonItem, IonRadio, IonRadioGroup, IonModal, IonDatetime, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, IonInput, IonNav, PageStandardPage, IonLabel ]
+	imports: [IonText, IonItem, IonRadio, IonRadioGroup, IonModal, IonDatetime, IonButton, CommonModule, FormsModule, ReactiveFormsModule, IonInput, PageStandardPage, IonLabel ]
 	
 })
 export class ProfileUpdatePage implements OnInit  {

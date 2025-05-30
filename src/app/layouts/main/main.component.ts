@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { IonIcon, IonTabButton, IonTabs, IonTabBar, ActionSheetController, NavController } from "@ionic/angular/standalone";
 import { personCircleOutline, peopleOutline, listCircleOutline, settings, calendarOutline } from 'ionicons/icons';
 import { PATH } from '../../configs/path';
+import { StorageService } from '@oda/core/services/storage/storage.service';
 
 @Component({
 	selector: 'app-main',
@@ -24,11 +25,15 @@ export class MainComponent  implements OnInit {
 
 	role: string = '';
 
+	storageService = inject(StorageService);
+
 	constructor() { }
 
 	ngOnInit() {
-		const userJson = localStorage.getItem('user');
+		const userJson:any = this.storageService.get('user');
 		const user = userJson ? JSON.parse(userJson) : null;
+
+		console.log('user ', user)
 		this.isProfileUpdated = user.isProfileUpdated;
 		this.role = user.role;
 
@@ -59,8 +64,8 @@ export class MainComponent  implements OnInit {
 			await actionSheet.present();
 		  }
 		async logout() {
-			localStorage.removeItem('token');
-			localStorage.removeItem('user');
+			this.storageService.delete('token');
+			this.storageService.delete('user');
 			this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
 		}
 		profilePage() {

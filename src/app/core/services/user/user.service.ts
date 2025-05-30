@@ -3,8 +3,7 @@ import { Observable, } from 'rxjs';
 import { map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
-import { UserProfile } from 'src/app/models/User';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -14,14 +13,14 @@ export class UserService {
 
 
 	private http = inject(HttpClient);
-	private storage = inject(Storage);
+	private storage = inject(StorageService);
 
 	constructor() {}
 
 
 	async logout(): Promise<any> {
-		const promise1 = this.storage.remove('token');
-		const promise2 = this.storage.remove('user');
+		const promise1 = this.storage.delete('token');
+		const promise2 = this.storage.delete('user');
 		return Promise.all([promise1, promise2]);
 	}
 	login(email: string, password: string): Observable<any> {
@@ -29,8 +28,11 @@ export class UserService {
 		return this.http.post<any>(this.API_BASE + 'users/login', data).pipe(
 		  map((res) => {
 			if (res.status === 'success') {
-				localStorage.setItem('user', JSON.stringify(res.user));
-			  localStorage.setItem('token', res.token);
+				//localStorage.setItem('user', JSON.stringify(res.user));
+			  //localStorage.setItem('token', res.token);
+				this.storage.set('user', JSON.stringify(res.user));
+				this.storage.set('token', res.token);
+				this.storage.setOnboarded();
 			  return res;
 			} else {
 			  throw new Error(res.message);

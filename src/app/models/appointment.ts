@@ -4,4 +4,5 @@ export interface Appointment {
     appointmentDate: string; // ISO date
     timeslot: string;
     status?: string;
+    remarks?: string;
   }

@@ -24,6 +24,14 @@ export default [
                 loadComponent: () => import('../../pages/doctors/doctor-detail/doctor-detail.page').then(m => m.DoctorDetailPage)
               },
               {
+                path: 'doctor-appointment',
+                loadComponent: () => import('../../pages/doctors-appointment/doctors-appointment.page').then(m => m.DoctorsAppointmentPage)
+              },
+              {
+                path: 'doctor-schedule',
+                loadComponent: () => import('../../pages/doctors-schedule/doctors-schedule.page').then(m => m.DoctorsSchedulePage)
+              },
+              {
                 path: '',
                 redirectTo: 'profile',
                 pathMatch: 'full'

@@ -24,8 +24,8 @@ export class AppointmentService {
 		return this.http.get<Appointment[]>(`${this.API_BASE}appointments/patients`);
 	}
 
-	getDoctorAppointments(doctorId: number, date: string): Observable<Appointment[]> {
-		return this.http.get<Appointment[]>(`${this.API_BASE}appointments/doctor/${doctorId}/${date}`);
+	getDoctorAppointments(date: string): Observable<Appointment[]> {
+		return this.http.get<Appointment[]>(`${this.API_BASE}appointments/doctor/${date}`);
 	}
 
 	getAvailableSlots(doctorId: number, date: string): Observable<string[]> {
@@ -39,4 +39,11 @@ export class AppointmentService {
 	updateAppointment(id: number, data: Partial<Appointment>): Observable<any> {
 		return this.http.put(`${this.API_BASE}appointments/change/${id}`, data);
 	}
+
+	updateDoctorAppointment(id: number, data: Partial<Appointment>): Observable<any> {
+		return this.http.put(`${this.API_BASE}appointments/doctor/change/${id}`, data);
+	}
+	// getDoctorsAppointment() {
+	// 	return this.http.get<string[]>(`${this.API_BASE}appointments/slots/${doctorId}/${date}`);
+	// }
 }

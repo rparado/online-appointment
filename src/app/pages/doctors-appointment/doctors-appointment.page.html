@@ -1,0 +1,101 @@
+<app-page-standard [loading]="loading"  [showBackButton]="false" class="ion-page" [showProfileBtn]="false" [pageTitle]="'My Appointments'" [showFooter]="false">
+	<ng-container main-content>
+		<ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+			<ion-refresher-content></ion-refresher-content>
+		  </ion-refresher>
+		  <ion-fab slot="fixed" vertical="bottom" horizontal="end" >
+			<ion-fab-button (click)="openDateModal()">
+				<ion-icon [icon]="calendarIcon"></ion-icon>
+			</ion-fab-button>
+		</ion-fab>
+		
+		@if(appointments.length) {
+			<h4 class="ion-margin">Here are the lists of your patients.</h4>
+			@for (item of appointments; track item?.id) {
+				<ion-card>
+					<ion-card-header>
+					<ion-card-title>
+						{{ item?.patient?.profile?.firstName }} {{ item?.patient?.profile?.middleName }} {{ item?.patient?.profile?.lastName }}
+					</ion-card-title>
+					</ion-card-header>
+				
+					<ion-card-content>
+					<ion-list>
+						@for (appt of item.appointments; track appt.id) {
+						<ion-item [color]="
+						 appt.status === 'pending' ? 'secondary' :
+						appt.status === 'cancelled' ? 'customerror' :
+						appt.status === 'confirmed' ? 'customsuccess' :
+						''
+						">
+							<ion-label>
+							<h3><strong>Date :</strong> {{ appt.appointmentDate | date: 'MMMM d, y' }}</h3>
+							<p><strong>Time:</strong> {{ appt.timeslot }}</p>
+							<p><strong>Queue #:</strong> {{ appt.queueNumber }}</p>
+							<p><strong>Status:</strong> {{ appt.status | titlecase}}</p>
+							</ion-label>
+							@if(appt.status !== "cancelled" && appt.status !== "completed" && appt.status !== "confirmed") {
+							<ion-buttons slot="end">
+								<ion-icon [icon]="ellipsesVertical" color="primary" (click)="presentActionSheet(appt.id, appt, item.patient)"></ion-icon>
+							</ion-buttons>
+						}
+						</ion-item>
+						
+						}
+					</ion-list>
+					</ion-card-content>
+				
+				</ion-card>
+			}	
+		} @else {
+			<ion-card class="ion-padding">
+				<ion-card-content>
+					<p>{{message}}</p>
+				</ion-card-content>
+			</ion-card>
+		}
+		<ion-modal #dateModal [keepContentsMounted]="true">
+			<ng-template>
+				<ion-datetime
+				[(ngModel)]="selectedDate"
+				presentation="date"
+				(ionChange)="onDateChange($event)"
+				[min]="today">
+			</ion-datetime>
+			</ng-template>
+			
+		</ion-modal>
+		<ion-modal #updateAppointment>
+			<ng-template>
+			  <ion-header>
+				<ion-toolbar>
+				  <ion-buttons slot="start">
+					<ion-button (click)="cancel()">Cancel</ion-button>
+				  </ion-buttons>
+				  <ion-title>{{patient?.profile?.firstName + ' ' + patient?.profile?.middleName + ' ' + patient?.profile?.lastName}}</ion-title>
+				  <ion-buttons slot="end">
+					<ion-button (click)="changeAppointment(selectedAppointment.id)" [strong]="true">Update</ion-button>
+				  </ion-buttons>
+				</ion-toolbar>
+			  </ion-header>
+			  <ion-content class="ion-padding">
+					<form [formGroup]="myForm">
+						<div class="input-wrapper ion-margin-bottom">
+							<ion-label>Status <ion-text color="danger">(Required)</ion-text></ion-label>
+							<ion-select [value]="selectedStatus" (ionChange)="onStatusChange($event)" formControlName="status" interface="action-sheet">
+								<ion-select-option [value]="'cancelled'">Decline</ion-select-option>
+								<ion-select-option [value]="'confirmed'">Confirm</ion-select-option>
+							</ion-select>
+						</div>
+						<div class="input-wrapper ion-margin-bottom">
+							<ion-label>Remarks</ion-label>
+							<ion-textarea placeholder="Input your remarks here" formControlName="remarks"></ion-textarea>
+						</div>
+
+					</form>
+			  </ion-content>
+			</ng-template>
+		  </ion-modal>
+	</ng-container>
+	
+</app-page-standard>

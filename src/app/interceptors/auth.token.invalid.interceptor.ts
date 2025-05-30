@@ -23,7 +23,7 @@ export class AuthTokenInvalidInterceptor implements HttpInterceptor {
                 if (request.url.includes(this.API_BASE)) {
                     if (error.status == 401) {
                         this.userService.logout();
-                        this.navCtrl.navigateRoot('/home');
+                        this.navCtrl.navigateRoot('/login');
                         message = 'Unauthorized';
                     }
                 }

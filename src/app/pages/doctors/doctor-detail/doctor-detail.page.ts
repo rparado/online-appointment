@@ -56,6 +56,8 @@ export class DoctorDetailPage implements OnInit {
 	
 	appointmentDate = new Date().toISOString().split('T')[0];
 
+	@ViewChild('validateAppointment', { static: true }) validateAppointment!: IonModal;
+
 	constructor() { }
 
 	getAvailableSlots() {
@@ -72,7 +74,7 @@ export class DoctorDetailPage implements OnInit {
 			this.myForm = this.fb.group({
 				doctor_id: [''],
 				patient_id: [''],
-				appointment_date: ['', Validators.required],
+				appointment_date: [this.appointmentDate],
 				time_slot: [this.selectedSlot]
 			});
 		  });
@@ -124,6 +126,7 @@ export class DoctorDetailPage implements OnInit {
 						this.toastService.presentSuccessToast(data.message);
 						this.loading = false;
 						this.modal.dismiss();
+						this.validateAppointment.dismiss();
 						this.appointmentService.shouldRefresh.next(true);
 						this.router.navigateByUrl('/apps/appointments');
 		
@@ -131,6 +134,7 @@ export class DoctorDetailPage implements OnInit {
 						this.toastService.presentErrorToast(data.message);
 						this.loading = false;
 						this.modal.dismiss();
+						this.validateAppointment.dismiss();
 					}
 				},
 				error: (err) => {
@@ -157,5 +161,10 @@ export class DoctorDetailPage implements OnInit {
 	onSlotChange(event: any) {
 		this.selectedSlot = event.detail.value;
 	}
-
+	closeModal() {
+		this.validateAppointment.dismiss();
+	}
+	showValidateModal() {
+		this.validateAppointment.present();
+	}
 }

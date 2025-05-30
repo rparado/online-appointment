@@ -45,4 +45,8 @@ export const routes: Routes = [
       children: [{ path: '', loadChildren: () => import('./layouts/main/main.routes') }],
   },
   { path: '**', redirectTo: PATH.INTRO, pathMatch: 'full' },
+  {
+    path: 'doctors-schedule',
+    loadComponent: () => import('./pages/doctors-schedule/doctors-schedule.page').then( m => m.DoctorsSchedulePage)
+  },
 ];

@@ -1,24 +1,20 @@
-<ion-header>
-    <ion-toolbar color="white">
-        <ion-title class="ion-text-center">
-			<ion-img src="./assets/logo.svg"></ion-img>
-        </ion-title>
-        
-    </ion-toolbar>
-</ion-header>
+
 <ion-content [forceOverscroll]="true" class="ion-padding">
-	<h3>Please enter your login details.</h3>
-	<form [formGroup]="myForm">
-		<div class="input-wrapper ion-margin-bottom">
-			<ion-label>E-mail</ion-label>
-			<ion-input  type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
-		</div>
-		<div class="input-wrapper">
-			<ion-label>Password</ion-label>
-			<ion-input type="password" inputmode="text" formControlName="password" required="true"></ion-input>
-		</div>
-		
-	</form>
+	<ion-img src="./assets/logo.svg"></ion-img>
+	<div class="center-container">
+		<h3>Please enter your login details.</h3>
+		<form [formGroup]="myForm">
+			<div class="input-wrapper ion-margin-bottom">
+				<ion-label>E-mail</ion-label>
+				<ion-input  type="text"  formControlName="email" inputmode="email" required="true"></ion-input>
+			</div>
+			<div class="input-wrapper">
+				<ion-label>Password</ion-label>
+				<ion-input type="password" inputmode="text" formControlName="password" required="true"></ion-input>
+			</div>
+			
+		</form>
+	</div>
 </ion-content>
 <ion-footer>
 	<ion-toolbar color="white">

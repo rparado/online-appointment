@@ -60,12 +60,18 @@ export class IntroPage implements OnInit {
 		  this.userService.login(email, password)
 		  .subscribe({
 			next: (data) => {
+				console.log('data ', data)
 				if (data.status === "success") {
 					this.toastService.presentSuccessToast(data.message);
 					this.loading = false;
-	
-					const targetTab = data.user.isProfileUpdated === 0 ? 'profile' : 'doctors';
-					this.router.navigateByUrl(`/apps/${targetTab}`);
+					
+					if(data.user.role!=="doctor") {
+						const targetTab = data.user.isProfileUpdated === 0 ? 'profile' : 'doctors';
+						this.router.navigateByUrl(`/apps/${targetTab}`);
+					} else {
+						this.router.navigateByUrl(`/apps/doctor-appointment`);
+					}
+				
 						
 	
 				} else {

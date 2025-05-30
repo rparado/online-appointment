@@ -1,28 +1,49 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="profile">
-          <div class="indicator">
-            <ion-icon [icon]="profileIcon"></ion-icon>
-          </div>
-          Profile
-      </ion-tab-button>
-      <ion-tab-button tab="doctors" [disabled]="isProfileUpdated === 0">
-          <div class="indicator">
-            <ion-icon [icon]="doctorsIcon"></ion-icon>
-          </div>
-          Doctor
-      </ion-tab-button>
-      <ion-tab-button tab="appointments" [disabled]="isProfileUpdated === 0">
-          <div class="indicator">
-            <ion-icon [icon]="appointmentsIcon"></ion-icon>
-          </div>
-          Appointments
-      </ion-tab-button>
-      <ion-tab-button (click)="presentActionSheet()">
-          <div class="indicator">
-            <ion-icon [icon]="settingsIcon"></ion-icon>
-          </div>
-          Settings
-      </ion-tab-button>
-  </ion-tab-bar>
+	<ion-tab-bar slot="bottom">
+			<ion-tab-button tab="profile">
+					<div class="indicator">
+						<ion-icon [icon]="profileIcon"></ion-icon>
+					</div>
+					Profile
+			</ion-tab-button>
+			@if(role==='patient') {
+				<ng-container>
+					<ion-tab-button tab="doctors" [disabled]="isProfileUpdated === 0">
+						<div class="indicator">
+							<ion-icon [icon]="doctorsIcon"></ion-icon>
+						</div>
+						Doctor
+					</ion-tab-button>
+					<ion-tab-button tab="appointments" [disabled]="isProfileUpdated === 0">
+							<div class="indicator">
+								<ion-icon [icon]="appointmentsIcon"></ion-icon>
+							</div>
+							Appointments
+					</ion-tab-button>
+				</ng-container>
+			}
+			@if(role=='doctor') {
+				<ng-container>
+					<!-- <ion-tab-button tab="doctor-schedule" [disabled]="isProfileUpdated === 0">
+						<div class="indicator">
+							<ion-icon [icon]="calendarIcon"></ion-icon>
+						</div>
+						My Schedules
+					</ion-tab-button> -->
+					<ion-tab-button tab="doctor-appointment" [disabled]="isProfileUpdated === 0">
+						<div class="indicator">
+							<ion-icon [icon]="appointmentsIcon"></ion-icon>
+						</div>
+						My Appointments
+					</ion-tab-button>
+				</ng-container>
+				
+			}
+			<ion-tab-button (click)="presentActionSheet()">
+					<div class="indicator">
+						<ion-icon [icon]="settingsIcon"></ion-icon>
+					</div>
+					Settings
+			</ion-tab-button>
+	</ion-tab-bar>
 </ion-tabs>

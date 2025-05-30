@@ -169,9 +169,9 @@ export class ProfileUpdatePage implements OnInit  {
 				this.toastService.presentSuccessToast(data.message);
 				this.loading = false;
 
-				localStorage.setItem('user', user)
-
-				this.router.navigateByUrl(`/apps/doctors`);
+				setTimeout(() => {
+					this.router.navigateByUrl(`/apps/doctors`);
+				}, 1500)
 
 			} else {
 				this.toastService.presentErrorToast(data.message);

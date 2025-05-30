@@ -87,6 +87,7 @@ export class AppointmentPage implements OnInit {
 		)
 		  .subscribe({
 			next: (response: any) => {
+				console.log('response ',response)
 			  this.appointments = this.groupAppointmentsByDoctor(response.data);
 			},
 			error: (err) => {

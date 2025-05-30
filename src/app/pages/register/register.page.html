@@ -1,7 +1,8 @@
 <app-page-standard [loading]="loading" backButtonDefaultHref="login" class="ion-page" [pageTitle]="'Register'">
 	
 	<ng-container main-content>
-		<h1 class="ion-margin-bottom">Create your account.</h1>
+		<div class="center-container">
+			<h1 class="ion-margin-bottom">Create your account.</h1>
 			<div class="form-container">
 				<form [formGroup]="myForm">
 					<div class="input-wrapper ion-margin-bottom">
@@ -21,6 +22,7 @@
 					
 				</form>
 			</div>
+		</div>
 	</ng-container>
 	<ng-container footer-action>
 		<ion-button 

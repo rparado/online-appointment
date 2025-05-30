@@ -206,7 +206,8 @@ ion-button {
         display: block;
         margin-bottom: 0.3125rem;
     }
-    ion-input {
+    ion-input,
+    ion-textarea {
         font-size: 1.25rem;
         --padding-start: 0.9375rem;
         --color: var(--ion-color-dark);
@@ -224,4 +225,11 @@ ion-button {
 .toast-message {
     color: var(--ion-color-white)
 
+}
+ion-modal {
+  padding-top: 3rem;
+}
+ion-datetime {
+    max-width: 100% !important;
+    width: 100% !important;
 }

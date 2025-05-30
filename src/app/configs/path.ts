@@ -6,5 +6,7 @@ export const PATH = {
     PAYMENTS: 'payments',
     REGISTER: 'register',
     APP_REDIRECTION: 'login',
-    PROFILE:'profile'
+    PROFILE:'profile',
+    DOCTOR_APPOINTMENT:'doctor-appointment',
+    DOCTOR_SCHEDULE:'doctor-schedule'
 }

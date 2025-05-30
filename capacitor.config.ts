@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'online-appointment',
+  appId: 'com.myDoctor.app',
+  appName: 'MyDoctor',
   webDir: 'www'
 };
 

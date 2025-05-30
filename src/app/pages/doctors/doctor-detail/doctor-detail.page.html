@@ -21,17 +21,6 @@
 
 		<ion-modal trigger="create-appointment">
 			<ng-template>
-			  <ion-header>
-				<ion-toolbar>
-				  <ion-buttons slot="start">
-					<ion-button (click)="cancel()">Cancel</ion-button>
-				  </ion-buttons>
-				  <ion-title>Dr. {{doctor?.profile?.firstName + ' ' + doctor?.profile?.middleName + ' ' + doctor?.profile?.lastName}}</ion-title>
-				  <ion-buttons slot="end">
-					<ion-button (click)="confirm()" [strong]="true">Book</ion-button>
-				  </ion-buttons>
-				</ion-toolbar>
-			  </ion-header>
 			  <ion-content class="ion-padding">
 				<form [formGroup]="myForm" enctype="multipart/form-data">
 					<div class="input-wrapper ion-margin-bottom">
@@ -51,21 +40,45 @@
 							</ion-select-option>
 						  </ion-select>
 					</div>
+					<ion-button 
+						expand="block" 
+						color="primary" 
+						(click)="showValidateModal()" 
+						shape="round"
+						[disabled]="myForm.invalid || loading"
+					>Submit</ion-button>
 				</form>
 			  </ion-content>
 			</ng-template>
-		  </ion-modal>
-		  <ion-modal [isOpen]="showDatePicker" (didDismiss)="showDatePicker = false">
+		</ion-modal>
+
+		<!-- agree -->
+		<ion-modal #validateAppointment>
 			<ng-template>
-			  <ion-datetime
-				presentation="date"
-				(ionChange)="onDateChange($event)"
-				[value]="myForm.get('appointment_date')?.value"
-				show-default-buttons="true"
-				[min]="today"
-			  ></ion-datetime>
+			  <ion-content class="ion-padding">
+				<h3>Are you sure you want to proceed?</h3>
+				  <ion-button 
+					expand="block" 
+					color="light" 
+					(click)="closeModal()" 
+					shape="round"
+				>Close</ion-button>
+				<ion-button expand="block" color="primary" (click)="confirm()" shape="round">Proceed</ion-button>
+			  </ion-content>
 			</ng-template>
 		  </ion-modal>
+
+		<ion-modal [isOpen]="showDatePicker" (didDismiss)="showDatePicker = false">
+		<ng-template>
+			<ion-datetime
+			presentation="date"
+			(ionChange)="onDateChange($event)"
+			[value]="myForm.get('appointment_date')?.value"
+			show-default-buttons="true"
+			[min]="today"
+			></ion-datetime>
+		</ng-template>
+		</ion-modal>
 	</ng-container>
 	<ng-container footer-action>
 		<ion-button 

@@ -3,6 +3,8 @@ import { IonIcon, IonTabButton, IonTabs, IonTabBar, ActionSheetController, NavCo
 import { personCircleOutline, peopleOutline, listCircleOutline, settings, calendarOutline } from 'ionicons/icons';
 import { PATH } from '../../configs/path';
 import { StorageService } from '@oda/core/services/storage/storage.service';
+import { Subscription } from 'rxjs';
+import { UserService } from '@oda/core/services/user/user.service';
 
 @Component({
 	selector: 'app-main',
@@ -27,17 +29,26 @@ export class MainComponent  implements OnInit {
 
 	storageService = inject(StorageService);
 
+	userService = inject(UserService);
+
+	userSub: Subscription | undefined;
+
 	constructor() { }
 
 	ngOnInit() {
-		const userJson:any = this.storageService.get('user');
-		const user = userJson ? JSON.parse(userJson) : null;
+		// const userJson:any = localStorage.getItem('user');
+		// const user = userJson ? JSON.parse(userJson) : null;
 
-		console.log('user ', user)
-		this.isProfileUpdated = user.isProfileUpdated;
-		this.role = user.role;
+		// this.isProfileUpdated = user.isProfileUpdated;
+		// this.role = user.role;
 
-		console.log('this.role ', this.role)
+		this.userSub = this.userService.currentUser$.subscribe(user => {
+			if (user) {
+				this.isProfileUpdated = user.isProfileUpdated;
+				this.role = user.role;
+			}
+		});
+
 	}
 	async presentActionSheet() {
 			const actionSheet = await this.actionSheetCtrl.create({
@@ -64,11 +75,15 @@ export class MainComponent  implements OnInit {
 			await actionSheet.present();
 		  }
 		async logout() {
-			this.storageService.delete('token');
-			this.storageService.delete('user');
-			this.navCtrl.navigateRoot([`${PATH.INTRO}`]);
+			await this.userService.logout();
 		}
 		profilePage() {
 			this.navCtrl.navigateRoot([`/apps/${PATH.PROFILE}`]);
+		}
+
+		ngOnDestroy(): void {
+			//Called once, before the instance is destroyed.
+			//Add 'implements OnDestroy' to the class.
+			this.userSub?.unsubscribe();
 		}
 }

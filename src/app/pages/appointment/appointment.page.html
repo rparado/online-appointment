@@ -33,7 +33,11 @@
 							<p><strong>Remarks:</strong> {{ appt.remarks}}</p>
 						  }
 						</ion-label>
-				
+						@if(appt.status !== "cancelled" && appt.status !== "completed" && appt.status !== "confirmed") {
+							<ion-buttons slot="end">
+								<ion-icon [icon]="ellipsesVertical" color="primary" (click)="presentActionSheet(appt.id, appt, item.doctor)"></ion-icon>
+							</ion-buttons>
+						}
 					  </ion-item>
 					  
 					}
@@ -44,4 +48,40 @@
 		}		
 
 	</ng-container>
+	<ion-modal #updateAppointment>
+			<ng-template>
+			  <ion-header>
+				<ion-toolbar>
+				  <ion-buttons slot="start">
+					<ion-button (click)="cancel()">Cancel</ion-button>
+				  </ion-buttons>
+				  <ion-title>Dr. {{doctor?.userProfile?.firstName + ' ' + doctor?.userProfile?.middleName + ' ' + doctor?.userProfile?.lastName}}</ion-title>
+				  <ion-buttons slot="end">
+					<ion-button (click)="changeAppointment(selectedAppointment.id)" [strong]="true">Update</ion-button>
+				  </ion-buttons>
+				</ion-toolbar>
+			  </ion-header>
+			  <ion-content class="ion-padding">
+				<form [formGroup]="myForm" enctype="multipart/form-data">
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Appointment Date <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-input
+							readonly
+							[value]="appointmentDateDisplay"
+							formControlName="appointment_date"
+							(click)="showDatePicker = true">
+						</ion-input>
+					</div>
+					<div class="input-wrapper ion-margin-bottom">
+						<ion-label>Time Slot <ion-text color="danger">(Required)</ion-text></ion-label>
+						<ion-select [value]="selectedSlot" (ionChange)="onSlotChange($event)" formControlName="time_slot" interface="action-sheet">
+							<ion-select-option *ngFor="let slot of availableSlots" [value]="slot">
+							  {{ slot }}
+							</ion-select-option>
+						  </ion-select>
+					</div>
+				</form>
+			  </ion-content>
+			</ng-template>
+		  </ion-modal>
 </app-page-standard>

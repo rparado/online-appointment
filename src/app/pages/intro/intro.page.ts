@@ -17,7 +17,6 @@ import { ToastService } from '@oda/core/services/toast.service';
 	imports: [IonLabel, IonImg,IonInput, IonContent, IonToolbar, CommonModule, FormsModule, IonButton,  ReactiveFormsModule, IonFooter, RouterModule ]
 })
 export class IntroPage implements OnInit {
-	navCtrl = inject(NavController);
 
 	fb = inject(FormBuilder);
 
@@ -41,6 +40,8 @@ export class IntroPage implements OnInit {
 
 	toastService = inject(ToastService);
 
+	navCtrl = inject(NavController);
+
 	ngOnInit() {
 		this.myForm.reset();
 	}
@@ -54,12 +55,14 @@ export class IntroPage implements OnInit {
 		const password = this.myForm.value.password;
 	
 		if (this.myForm.invalid) {
+			this.loading = false;
 			return; 
 		}
 	
 		  this.userService.login(email, password)
 		  .subscribe({
 			next: (data) => {
+				console.log('data ', data)
 				if (data.status === "success") {
 					this.toastService.presentSuccessToast(data.message);
 					this.loading = false;

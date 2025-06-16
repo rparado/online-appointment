@@ -131,8 +131,6 @@ export class DoctorsAppointmentPage implements OnInit {
 	}
 	async presentActionSheet(appointmentId: number, appointment: any, patient: any) {
 
-		console.log('patient ', patient)
-
 		const actionSheet = await this.actionSheetCtrl.create({
 			header: 'Update your appointment',
 			mode: 'md',

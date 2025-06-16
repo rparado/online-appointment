@@ -1,7 +1,7 @@
 import {  Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonModal, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonItem, IonLabel, IonList, ActionSheetController, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
+import { IonModal, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonItem, IonLabel, IonList, ActionSheetController, IonRefresher, IonRefresherContent, IonToolbar, IonButtons, IonHeader, IonButton, IonContent, IonTitle, IonSelect, IonSelectOption, IonText, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { finalize, Subject,} from 'rxjs';
@@ -13,7 +13,7 @@ import { ToastService } from '@oda/core/services/toast.service';
   templateUrl: './appointment.page.html',
   styleUrls: ['./appointment.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonList, IonLabel, IonItem, IonCardTitle, IonCardContent, IonCardSubtitle, IonCardHeader, IonCard,CommonModule, FormsModule, PageStandardPage, IonCardSubtitle, ReactiveFormsModule]
+  imports: [IonIcon, IonButtons, IonToolbar, IonRefresherContent, IonRefresher, IonList, IonLabel, IonItem, IonCardTitle, IonCardContent, IonCardSubtitle, IonCardHeader, IonCard,CommonModule, FormsModule, PageStandardPage, IonCardSubtitle, ReactiveFormsModule, IonModal, IonHeader, IonButton, IonTitle, IonContent, IonSelect, IonSelectOption, IonText, IonInput]
 })
 export class AppointmentPage implements OnInit {
 	loading: boolean = false;

@@ -1,9 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, } from 'rxjs';
-import { map} from 'rxjs/operators';
+import { BehaviorSubject, from, Observable, } from 'rxjs';
+import { map, switchMap, tap} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from '../storage/storage.service';
+import { Storage } from '@ionic/storage';
+import { UserProfile } from 'src/app/models/User';
+import { Preferences } from '@capacitor/preferences';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root',
@@ -13,45 +16,54 @@ export class UserService {
 
 
 	private http = inject(HttpClient);
-	private storage = inject(StorageService);
+	private storage = inject(Storage);
+	private router = inject(Router);
 
-	constructor() {}
+	private currentUserSubject = new BehaviorSubject<any>(null);
+	public currentUser$ = this.currentUserSubject.asObservable();
 
+	constructor() {
+		this.loadStoredUser();
+	}
 
-	async logout(): Promise<any> {
-		const promise1 = this.storage.delete('token');
-		const promise2 = this.storage.delete('user');
-		return Promise.all([promise1, promise2]);
+	private async loadStoredUser() {
+		const { value } = await Preferences.get({ key: 'user' });
+		if (value) {
+		this.currentUserSubject.next(JSON.parse(value));
+		}
+	}
+	async logout(): Promise<void> {
+		await Preferences.remove({ key: 'token' });
+		await Preferences.remove({ key: 'user' });
+		this.currentUserSubject.next(null);
+		this.router.navigate(['/login']);
 	}
 	login(email: string, password: string): Observable<any> {
-		const data = { email, password };
+		 const data = { email, password };
 		return this.http.post<any>(this.API_BASE + 'users/login', data).pipe(
-		  map((res) => {
+			tap(async (res) => {
 			if (res.status === 'success') {
-				//localStorage.setItem('user', JSON.stringify(res.user));
-			  //localStorage.setItem('token', res.token);
-				this.storage.set('user', JSON.stringify(res.user));
-				this.storage.set('token', res.token);
-				this.storage.setOnboarded();
-			  return res;
-			} else {
-			  throw new Error(res.message);
+				await Preferences.set({ key: 'user', value: JSON.stringify(res.user) });
+				await Preferences.set({ key: 'token', value: res.token });
+				this.currentUserSubject.next(res.user);
 			}
-		  })
+			})
 		);
-	  }
+	}
 	register(email: string, password: string, role: string = 'patient'): Observable<any> {
-		const data = { email, password, role };
+		 const data = { email, password, role };
 		return this.http.post<any>(this.API_BASE + 'users/register', data).pipe(
-		  map((res) => {
+		switchMap(async (res) => {
 			if (res.status === 'success') {
-				localStorage.setItem('user', JSON.stringify(res.user));
-				localStorage.setItem('token', res.token);
-			  return res;
+			await Preferences.set({ key: 'user', value: JSON.stringify(res.user) });
+			await Preferences.set({ key: 'token', value: res.token });
+			this.currentUserSubject.next(res.user);
+			return res;
 			} else {
-			  throw new Error(res.message);
+			throw new Error(res.message);
 			}
-		  })
+		}),
+		from
 		);
 	  }
 	

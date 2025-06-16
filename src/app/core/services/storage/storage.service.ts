@@ -29,7 +29,7 @@ export class StorageService {
         return result;
     }
 
-    public get(key: string): Promise<any> {
+    public async get(key: string): Promise<any> {
         return this._storage?.get(key) ?? Promise.reject('Storage get error');
     }
 

@@ -6,6 +6,7 @@ import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.pa
 import { ToastService } from '@oda/core/services/toast.service';
 import { UserService } from '@oda/core/services/user/user.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-profile-update',
@@ -57,20 +58,32 @@ export class ProfileUpdatePage implements OnInit  {
 
 	router = inject(Router);
 
+	userSub: Subscription | undefined;
+
+	user: any;
+
 	constructor() { }
 
 	ngOnInit() {
 		const now = new Date();
   		this.today = now.toISOString().split('T')[0];
 
+		this.userSub = this.userService.currentUser$.subscribe(user => {
+			if (user) {
+				this.user = user;
+			}
+		});
+
 		this.populateForm();
 	}
 
 	populateForm() {
-		const userJson = localStorage.getItem('user');
-		const user = userJson ? JSON.parse(userJson) : null;
+		// const userJson = localStorage.getItem('user');
+		// const user = userJson ? JSON.parse(userJson) : null;
 
-		this.userService.getUserProfile(user.id)
+	
+
+		this.userService.getUserProfile(this.user.id)
 		.subscribe({
 			next: (resp: any) => {
 
@@ -143,8 +156,8 @@ export class ProfileUpdatePage implements OnInit  {
 			return; 
 		}
 
-		const userString  = localStorage.getItem('user');
-		const user = userString ? JSON.parse(userString) : null;
+		// const userString  = localStorage.getItem('user');
+		// const user = userString ? JSON.parse(userString) : null;
 
 		const formData: any = new FormData();
 		formData.append('firstName', this.myForm.value.f_name);
@@ -160,7 +173,7 @@ export class ProfileUpdatePage implements OnInit  {
 		  formData.append('avatar', this.selectedFile);
 		}
 		
-		this.userService.updateProfile(user.id, formData)
+		this.userService.updateProfile(this.user.id, formData)
 		.subscribe({
 		next: (data: any) => {
 
@@ -183,6 +196,12 @@ export class ProfileUpdatePage implements OnInit  {
 			this.loading = false;
 		}
 		});
+	  }
+
+	  ngOnDestroy(): void {
+		//Called once, before the instance is destroyed.
+		//Add 'implements OnDestroy' to the class.
+		this.userSub?.unsubscribe();
 	  }
 
 }

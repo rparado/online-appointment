@@ -10,6 +10,7 @@ import { Doctor } from 'src/app/models/Doctor';
 
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { ToastService } from '@oda/core/services/toast.service';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
 	selector: 'app-doctor-detail',
@@ -59,6 +60,8 @@ export class DoctorDetailPage implements OnInit {
 
 	constructor() { }
 
+	
+
 	getAvailableSlots() {
 		this.appointmentService.getAvailableSlots(<any>this.doctor?.id, this.appointmentDate)
 		.subscribe((res: any) => {
@@ -104,9 +107,11 @@ export class DoctorDetailPage implements OnInit {
 		this.modal.dismiss(null, 'cancel');
 	}
 
-	confirm() {
-		const userStr:any  = localStorage.getItem('user');
-		const user = JSON.parse(userStr);
+	async confirm() {
+
+		const { value } = await Preferences.get({ key: 'user' });
+  		const user = value ? JSON.parse(value) : null;
+
 
 		let data:any = {
 			patientId: user?.id,

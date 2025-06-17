@@ -1,19 +1,23 @@
 import {  Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonModal, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonItem, IonLabel, IonList, ActionSheetController, IonRefresher, IonRefresherContent, IonToolbar, IonButtons, IonHeader, IonButton, IonContent, IonTitle, IonSelect, IonSelectOption, IonText, IonInput, IonIcon } from '@ionic/angular/standalone';
+import { IonModal, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonItem, IonLabel, IonList, ActionSheetController, IonRefresher, IonRefresherContent, IonToolbar, IonButtons, IonHeader, IonButton, IonContent, IonTitle, IonSelect, IonSelectOption, IonText, IonInput, IonIcon, IonDatetime } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { finalize, Subject,} from 'rxjs';
 
 import { ellipsisVerticalOutline } from 'ionicons/icons';
 import { ToastService } from '@oda/core/services/toast.service';
+
+import { format } from 'date-fns';
+
+
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.page.html',
   styleUrls: ['./appointment.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonButtons, IonToolbar, IonRefresherContent, IonRefresher, IonList, IonLabel, IonItem, IonCardTitle, IonCardContent, IonCardSubtitle, IonCardHeader, IonCard,CommonModule, FormsModule, PageStandardPage, IonCardSubtitle, ReactiveFormsModule, IonModal, IonHeader, IonButton, IonTitle, IonContent, IonSelect, IonSelectOption, IonText, IonInput]
+  imports: [IonIcon, IonButtons, IonToolbar, IonRefresherContent, IonRefresher, IonList, IonLabel, IonItem, IonCardTitle, IonCardContent, IonCardSubtitle, IonCardHeader, IonCard,CommonModule, FormsModule, PageStandardPage, IonCardSubtitle, ReactiveFormsModule, IonModal, IonHeader, IonButton, IonTitle, IonContent, IonSelect, IonSelectOption, IonText, IonInput, IonDatetime]
 })
 export class AppointmentPage implements OnInit {
 	loading: boolean = false;
@@ -57,6 +61,8 @@ export class AppointmentPage implements OnInit {
 	availableSlots: string[] = [];
 
 	selectedSlot: string = '';
+
+	selectedDate: string = '';
 	
 	constructor() { 
 
@@ -64,11 +70,15 @@ export class AppointmentPage implements OnInit {
 			doctor_id: [''],
 			patient_id: [''],
 			appointment_date: [''],
-			time_slot: ['']
+			time_slot: [''],
+			remarks: ['']
 		});
 	}
 
 	ngOnInit() {
+		const today = new Date();
+		this.selectedDate = format(today, 'yyyy-MM-dd');
+
 		this.loadAppointments();
 		this.getAvailableSlots();
 
@@ -87,7 +97,6 @@ export class AppointmentPage implements OnInit {
 		)
 		  .subscribe({
 			next: (response: any) => {
-				console.log('response ',response)
 			  this.appointments = this.groupAppointmentsByDoctor(response.data);
 			},
 			error: (err) => {
@@ -139,6 +148,7 @@ export class AppointmentPage implements OnInit {
 		let data:any = {
 			appointmentDate: this.myForm.value.appointment_date,
 			timeslot: this.myForm.value.time_slot,
+			remarks: this.myForm.value.remakrs,
 			status: "pending"
 		}
 		this.appointment.updateAppointment(appointmentId, data)

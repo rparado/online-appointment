@@ -166,7 +166,7 @@ export class DoctorsAppointmentPage implements OnInit {
 					this.updateAppointmentModal.dismiss();
 					 this.myForm.reset({
 						status: 'cancelled',
-						remakrs: ''
+						remarks: ''
 					});
 
 					this.loadAppointments();

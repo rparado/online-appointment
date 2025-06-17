@@ -63,6 +63,8 @@ export class AppointmentPage implements OnInit {
 	selectedSlot: string = '';
 
 	selectedDate: string = '';
+
+	@ViewChild('dateModal', { static: false }) dateModal!: IonModal;
 	
 	constructor() { 
 
@@ -70,8 +72,7 @@ export class AppointmentPage implements OnInit {
 			doctor_id: [''],
 			patient_id: [''],
 			appointment_date: [''],
-			time_slot: [''],
-			remarks: ['']
+			time_slot: ['']
 		});
 	}
 
@@ -148,7 +149,6 @@ export class AppointmentPage implements OnInit {
 		let data:any = {
 			appointmentDate: this.myForm.value.appointment_date,
 			timeslot: this.myForm.value.time_slot,
-			remarks: this.myForm.value.remakrs,
 			status: "pending"
 		}
 		this.appointment.updateAppointment(appointmentId, data)
@@ -211,7 +211,7 @@ export class AppointmentPage implements OnInit {
 	populateForm(appointment: any) {
 		this.myForm.patchValue({
 		  appointment_date: appointment.appointmentDate,
-		  time_slot: appointment.timeslot,
+		  time_slot: appointment.timeslot
 		});
 	}
 	cancel() {

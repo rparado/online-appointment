@@ -46,7 +46,12 @@
 			  
 			  </ion-card>
 		}		
-		<ion-modal #dateModal [keepContentsMounted]="true">
+
+		<ion-modal 
+			[isOpen]="showDatePicker"
+			(didDismiss)="showDatePicker = false"
+			[keepContentsMounted]="true"
+		>
 			<ng-template>
 				<ion-datetime
 					[(ngModel)]="selectedDate"
@@ -57,6 +62,7 @@
 			</ng-template>
 			
 		</ion-modal>
+
 		<ion-modal #updateAppointment>
 			<ng-template>
 			  <ion-header>
@@ -71,7 +77,7 @@
 				</ion-toolbar>
 			  </ion-header>
 			  <ion-content class="ion-padding">
-				<form [formGroup]="myForm" enctype="multipart/form-data">
+				<form [formGroup]="myForm">
 					<div class="input-wrapper ion-margin-bottom">
 						<ion-label>Appointment Date <ion-text color="danger">(Required)</ion-text></ion-label>
 						<ion-input
@@ -88,10 +94,6 @@
 							  {{ slot }}
 							</ion-select-option>
 						  </ion-select>
-					</div>
-					<div class="input-wrapper ion-margin-bottom">
-						<ion-label>Remarks</ion-label>
-						<ion-textarea placeholder="Input your remarks here" formControlName="remarks"></ion-textarea>
 					</div>
 				</form>
 			  </ion-content>

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonIcon, IonTabButton, IonTabs, IonTabBar, ActionSheetController, NavController } from "@ionic/angular/standalone";
-import { personCircleOutline, peopleOutline, listCircleOutline, settings, calendarOutline } from 'ionicons/icons';
+import { personCircleOutline, peopleOutline, listCircleOutline, settings, calendarOutline, documentOutline } from 'ionicons/icons';
 import { PATH } from '../../configs/path';
 import { StorageService } from '@oda/core/services/storage/storage.service';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,7 @@ export class MainComponent  implements OnInit {
 	appointmentsIcon = listCircleOutline;
 	settingsIcon = settings;
 	calendarIcon = calendarOutline;
+	fileIcon = documentOutline;
 
 	actionSheetCtrl = inject(ActionSheetController);
 

@@ -8,5 +8,6 @@ export const PATH = {
     APP_REDIRECTION: 'login',
     PROFILE:'profile',
     DOCTOR_APPOINTMENT:'doctor-appointment',
-    DOCTOR_SCHEDULE:'doctor-schedule'
+    DOCTOR_SCHEDULE:'doctor-schedule',
+    MEDICAL_RECORD: 'medical-record'
 }

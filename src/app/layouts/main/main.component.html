@@ -24,17 +24,18 @@
 			}
 			@if(role=='doctor') {
 				<ng-container>
-					<!-- <ion-tab-button tab="doctor-schedule" [disabled]="isProfileUpdated === 0">
-						<div class="indicator">
-							<ion-icon [icon]="calendarIcon"></ion-icon>
-						</div>
-						My Schedules
-					</ion-tab-button> -->
+					
 					<ion-tab-button tab="doctor-appointment" [disabled]="isProfileUpdated === 0">
 						<div class="indicator">
 							<ion-icon [icon]="appointmentsIcon"></ion-icon>
 						</div>
 						My Appointments
+					</ion-tab-button>
+					<ion-tab-button tab="medical-record">
+						<div class="indicator">
+							<ion-icon [icon]="fileIcon"></ion-icon>
+						</div>
+						Medical Record
 					</ion-tab-button>
 				</ng-container>
 				

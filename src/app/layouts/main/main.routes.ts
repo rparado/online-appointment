@@ -28,8 +28,8 @@ export default [
                 loadComponent: () => import('../../pages/doctors-appointment/doctors-appointment.page').then(m => m.DoctorsAppointmentPage)
               },
               {
-                path: 'doctor-schedule',
-                loadComponent: () => import('../../pages/doctors-schedule/doctors-schedule.page').then(m => m.DoctorsSchedulePage)
+                path: 'medical-record',
+                loadComponent: () => import('../../pages/medical-record/medical-record.page').then(m => m.MedicalRecordPage)
               },
               {
                 path: '',

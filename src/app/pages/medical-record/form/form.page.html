@@ -1,0 +1,88 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+		</ion-buttons>
+		<ion-title>Medical Record</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="confirm()" [strong]="true">Submit</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+	<h3 class="ion-margin-bottom">Medical record for patient {{appointment.patient.profile.firstName}} {{appointment.patient.profile.middleName}} {{appointment.patient.profile.lastName}}</h3>
+	<br>
+	<form [formGroup]="myForm" enctype="multipart/form-data">
+					
+		<div class="input-wrapper ion-margin-bottom">
+			
+			<ion-label>Diagnosis <ion-text color="danger">(Required)</ion-text></ion-label>
+			<ion-input  
+				type="text"  
+				formControlName="diagnosis" 
+				inputmode="text" 
+				required="true"
+				minlength="1"
+			></ion-input>
+		</div>
+		<div class="input-wrapper ion-margin-bottom">
+			<ion-label>Treatment <ion-text color="danger">(Required)</ion-text></ion-label>
+			<ion-input  
+				type="text"  
+				formControlName="treatment" 
+				inputmode="text" 
+				required="true"
+				minlength="1"
+			></ion-input>
+		</div>
+		<div class="input-wrapper ion-margin-bottom">
+			<ion-label>Prescription <ion-text color="danger">(Required)</ion-text></ion-label>
+			<ion-input  
+				type="text"  
+				formControlName="prescription" 
+				inputmode="text" 
+				required="true"
+				minlength="1"
+			></ion-input>
+		</div>
+		<div class="input-wrapper ion-margin-bottom">
+			<ion-label>Notes</ion-label>
+			<ion-textarea  
+				formControlName="note"
+				autoGrow="true"
+				ngDefaultControl
+			></ion-textarea>
+		</div>
+		<div class="input-wrapper ion-margin-bottom">
+			<ion-label>Follow-up Date <ion-text color="danger">(Required)</ion-text></ion-label>
+			<ion-input
+				readonly
+				[value]="dateDisplay"
+				formControlName="f_date"
+				(click)="showDatePicker = true">
+			</ion-input>
+		</div>
+		<div class="input-wrapper ion-margin-bottom">
+			<ion-label>File <ion-text color="danger">(Required)</ion-text></ion-label>
+			<input 
+				type="file" 
+				id="image" 
+				accept="image/*,.pdf" 
+				capture="environment" 
+				(change)="onFileSelected($event)"
+				formControlName="file"
+				/>
+		</div>
+	</form>
+	<ion-modal [isOpen]="showDatePicker" (didDismiss)="showDatePicker = false">
+		<ng-template>
+			<ion-datetime
+				presentation="date"
+				(ionChange)="onDobChange($event)"
+				[value]="myForm.get('dob')?.value"
+				show-default-buttons="true"
+				[max]="today"
+			></ion-datetime>
+		</ng-template>
+	</ion-modal>
+</ion-content>

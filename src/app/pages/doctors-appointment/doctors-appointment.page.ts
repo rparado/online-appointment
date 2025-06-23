@@ -1,13 +1,14 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonLabel, IonItem, IonCardHeader, IonCardTitle, IonCardContent,IonCard, IonSelect, IonSelectOption, IonButton, IonButtons, IonModal, IonDatetime, IonFabButton, IonIcon, IonFab, IonList, IonText, ActionSheetController, IonTextarea } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonLabel, IonItem, IonCardHeader, IonCardTitle, IonCardContent,IonCard, IonSelect, IonSelectOption, IonButton, IonButtons, IonModal, IonDatetime, IonFabButton, IonIcon, IonFab, IonList, IonText, ActionSheetController, IonTextarea, ModalController  } from '@ionic/angular/standalone';
 import { PageStandardPage } from "../../layouts/page-standard/page-standard.page";
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { format } from 'date-fns';
-import { calendarOutline, ellipsisVerticalOutline } from 'ionicons/icons';
+import { addCircleOutline, calendarOutline, ellipsisVerticalOutline } from 'ionicons/icons';
 import { finalize } from 'rxjs';
 import { ToastService } from '@oda/core/services/toast.service';
+import { FormPage } from '../medical-record/form/form.page';
 
 @Component({
 	selector: 'app-doctors-appointment',
@@ -34,6 +35,8 @@ export class DoctorsAppointmentPage implements OnInit {
 	calendarIcon = calendarOutline;
 
 	ellipsesVertical = ellipsisVerticalOutline;
+	
+	addPlusOutline = addCircleOutline;
 
 	today = new Date().toISOString().split('T')[0];
 
@@ -50,6 +53,10 @@ export class DoctorsAppointmentPage implements OnInit {
 	patient: any = null;
 
 	selectedStatus: string = '';
+
+	modalCtrl = inject(ModalController);
+
+	appointment: any;
 	
 	constructor() { 
 		this.myForm = this.fb.group({
@@ -131,19 +138,31 @@ export class DoctorsAppointmentPage implements OnInit {
 	}
 	async presentActionSheet(appointmentId: number, appointment: any, patient: any) {
 
-		const actionSheet = await this.actionSheetCtrl.create({
-			header: 'Update your appointment',
-			mode: 'md',
-			buttons: [
+		const buttons = [
 			{
 				text: 'Change',
 				handler: () => {
 					this.selectedAppointment = appointment;
 					this.patient = patient;
 					this.updateAppointmentModal.present();
-					},
-			},
-			],
+				},
+			}
+		];
+
+		// Only add "Add Medical Record" button if appointment is completed
+		if (appointment.status === 'completed') {
+			buttons.push({
+				text: 'Add Medical Record',
+				handler: () => {
+					// Your logic here, e.g. open medical record modal
+				}
+			});
+		}
+
+		const actionSheet = await this.actionSheetCtrl.create({
+			header: 'Update your appointment',
+			mode: 'md',
+			buttons: buttons,
 		});
 
 		await actionSheet.present();
@@ -183,5 +202,19 @@ export class DoctorsAppointmentPage implements OnInit {
 	}
 	onStatusChange(event: any) {
 		this.selectedStatus = event.detail.value;
+	}
+
+	async openMedicalModal(appt: any) {
+		const modal = await this.modalCtrl.create({
+		component: FormPage,
+		componentProps: {
+			appointment: appt,
+		},
+	});
+
+	await modal.present();
+
+		const { data } = await modal.onDidDismiss();
+		console.log('Returned data:', data);
 	}
 }

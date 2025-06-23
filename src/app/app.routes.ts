@@ -45,4 +45,8 @@ export const routes: Routes = [
       children: [{ path: '', loadChildren: () => import('./layouts/main/main.routes') }],
   },
   { path: '**', redirectTo: PATH.INTRO, pathMatch: 'full' },
+  {
+    path: 'form',
+    loadComponent: () => import('./pages/medical-record/form/form.page').then( m => m.FormPage)
+  },
 ];

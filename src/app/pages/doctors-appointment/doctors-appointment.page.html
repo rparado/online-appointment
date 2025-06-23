@@ -25,7 +25,7 @@
 						<ion-item [color]="
 						 appt.status === 'pending' ? 'secondary' :
 						appt.status === 'cancelled' ? 'customerror' :
-						appt.status === 'confirmed' ? 'customsuccess' :
+						appt.status === 'confirmed' ? 'secondary' :
 						''
 						">
 							<ion-label>
@@ -34,11 +34,15 @@
 							<p><strong>Queue #:</strong> {{ appt.queueNumber }}</p>
 							<p><strong>Status:</strong> {{ appt.status | titlecase}}</p>
 							</ion-label>
-							@if(appt.status !== "cancelled" && appt.status !== "completed" && appt.status !== "confirmed") {
+							<!-- @if(appt.status !== "cancelled" && appt.status !== "completed" && appt.status !== "confirmed") {
+								<ion-buttons slot="end">
+									<ion-icon [icon]="ellipsesVertical" color="primary" (click)="presentActionSheet(appt.id, appt, item.patient)"></ion-icon>
+								</ion-buttons>
+							} -->
 							<ion-buttons slot="end">
+								<ion-icon [icon]="addPlusOutline" color="primary" (click)="openMedicalModal(appt)"></ion-icon>
 								<ion-icon [icon]="ellipsesVertical" color="primary" (click)="presentActionSheet(appt.id, appt, item.patient)"></ion-icon>
 							</ion-buttons>
-						}
 						</ion-item>
 						
 						}
@@ -85,6 +89,7 @@
 							<ion-select [value]="selectedStatus" (ionChange)="onStatusChange($event)" formControlName="status" interface="action-sheet">
 								<ion-select-option [value]="'cancelled'">Decline</ion-select-option>
 								<ion-select-option [value]="'confirmed'">Confirm</ion-select-option>
+								<ion-select-option [value]="'completed'">Completed</ion-select-option>
 							</ion-select>
 						</div>
 						<div class="input-wrapper ion-margin-bottom">
@@ -95,7 +100,7 @@
 					</form>
 			  </ion-content>
 			</ng-template>
-		  </ion-modal>
+		</ion-modal>
 	</ng-container>
 	
 </app-page-standard>

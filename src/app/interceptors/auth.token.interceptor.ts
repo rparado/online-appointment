@@ -14,7 +14,8 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         'profile',
         'appointments',
         'doctors',
-        'payment'
+        'payment',
+        'medical-records'
     ];
 
     constructor() {

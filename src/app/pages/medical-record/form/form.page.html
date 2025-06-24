@@ -79,9 +79,8 @@
 			<ion-datetime
 				presentation="date"
 				(ionChange)="onDobChange($event)"
-				[value]="myForm.get('dob')?.value"
-				show-default-buttons="true"
-				[max]="today"
+				[value]="myForm.get('f_date')?.value"
+				[min]="today"
 			></ion-datetime>
 		</ng-template>
 	</ion-modal>

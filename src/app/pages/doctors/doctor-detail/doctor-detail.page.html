@@ -34,9 +34,12 @@
 					</div>
 					<div class="input-wrapper ion-margin-bottom">
 						<ion-label>Time Slot <ion-text color="danger">(Required)</ion-text></ion-label>
-						<ion-select [value]="selectedSlot" (ionChange)="onSlotChange($event)" formControlName="time_slot" interface="action-sheet">
-							<ion-select-option *ngFor="let slot of availableSlots" [value]="slot">
-							  {{ slot }}
+						<ion-select [value]="selectedSlot" (ionChange)="onSlotChange($event)" formControlName="time_slot" interface="popover">
+							<ion-select-option 
+								*ngFor="let slot of availableSlots" 
+								[value]="slot.time"
+								[disabled]="slot.disabled">
+							  {{ slot.time }}
 							</ion-select-option>
 						  </ion-select>
 					</div>

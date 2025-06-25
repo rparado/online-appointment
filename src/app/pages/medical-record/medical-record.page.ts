@@ -9,7 +9,7 @@ import { ViewMedicalRecordPage } from './view-medical-record/view-medical-record
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { FileViewer } from '@capacitor/file-viewer';
 import { Capacitor } from '@capacitor/core';
-
+import { environment } from 'src/environments/environment';
 @Component({
 	selector: 'app-medical-record',
 	templateUrl: './medical-record.page.html',
@@ -34,6 +34,8 @@ export class MedicalRecordPage implements OnInit {
 		medicalRecords: any;
 
 		 modalCtrl = inject(ModalController);
+
+		 url = environment.webURL
 
 		constructor() { 
 
@@ -80,13 +82,12 @@ export class MedicalRecordPage implements OnInit {
 			this.MedicalRecordListSubs.unsubscribe();
 		}
 
-		async download(url: string, filename: string) {
+		async download(filename: string) {
 			const platform = Capacitor.getPlatform();
 
-			console.log('platform ', platform)
 
 			if (platform === 'web') {
-				const fileUrl = `${url}/${filename}`;
+				const fileUrl = `${this.url}/${filename}`;
 
 				// Preview in iframe
 				const iframe = document.createElement('iframe');
@@ -105,7 +106,7 @@ export class MedicalRecordPage implements OnInit {
 				document.body.removeChild(a);
 			} else {
 				try {
-				const response = await fetch(`${url}/${filename}`);
+				const response = await fetch(`${this.url}/${filename}`);
 				const blob = await response.blob();
 
 				const reader = new FileReader();

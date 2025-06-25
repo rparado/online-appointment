@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api/',
-  webURL: 'http://localhost:3000/uploads/medicalRecords'
+  webURL: 'http://localhost:3000/uploads/medicalRecords',
+  uploadsUrl: 'http://localhost:3000/uploads',
 };
 
 /*

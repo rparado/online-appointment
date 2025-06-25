@@ -7,7 +7,7 @@
 			<ion-item [routerLink]="['/apps/doctor-detail', item.id]">
 			  <ion-avatar slot="start">
 				@if(item.profile.avatar) {
-					<img [src]="item.profile.avatar" alt="avatar" />
+					<img [src]="url + '/' + item.profile.avatar" alt="avatar" />
 				} @else {
 					<ion-label>
 						{{ item.profile.firstName | initials: item.profile.lastName }}

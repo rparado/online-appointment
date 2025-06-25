@@ -8,6 +8,7 @@ import { Doctor } from 'src/app/models/Doctor';
 import { InitialsPipe } from "../../core/pipes/initials.pipe";
 import { RouterModule } from '@angular/router';
 import { finalize } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-doctors',
@@ -22,6 +23,8 @@ export class DoctorsPage implements OnInit {
 	doctors = inject(DoctorService);
 
 	doctorList: any[] = [];
+
+	url = environment.uploadsUrl;
 
 	constructor() { }
 

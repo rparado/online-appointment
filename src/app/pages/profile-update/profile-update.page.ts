@@ -7,6 +7,7 @@ import { ToastService } from '@oda/core/services/toast.service';
 import { UserService } from '@oda/core/services/user/user.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-profile-update',
@@ -62,6 +63,8 @@ export class ProfileUpdatePage implements OnInit  {
 
 	user: any;
 
+	url = environment.uploadsUrl;
+
 	constructor() { }
 
 	ngOnInit() {
@@ -69,23 +72,20 @@ export class ProfileUpdatePage implements OnInit  {
   		this.today = now.toISOString().split('T')[0];
 
 		this.userSub = this.userService.currentUser$.subscribe(user => {
+			console.log('user ', user)
 			if (user) {
 				this.user = user;
 			}
 		});
-
 		this.populateForm();
 	}
 
 	populateForm() {
-		// const userJson = localStorage.getItem('user');
-		// const user = userJson ? JSON.parse(userJson) : null;
 
-	
-
-		this.userService.getUserProfile(this.user.id)
+		this.userService.getUserProfile(this.user?.id)
 		.subscribe({
 			next: (resp: any) => {
+				console.log('resss ', resp)
 
 				if(resp.data.isProfileUpdated === 1) {
 					this.myForm.patchValue({
@@ -99,7 +99,8 @@ export class ProfileUpdatePage implements OnInit  {
 						gender: resp.data.UserProfile.gender,
 					})
 
-					this.imagePreview = resp.data.UserProfile.avatar || null;
+					this.imagePreview = `${this.url}/${resp.data.UserProfile.avatar}`;
+					console.log('this.imagePreview ', this.imagePreview)
 				}
 			},
 			error: (err) => {
@@ -176,14 +177,18 @@ export class ProfileUpdatePage implements OnInit  {
 		this.userService.updateProfile(this.user.id, formData)
 		.subscribe({
 		next: (data: any) => {
+			console.log('data ', data)
 
 			if (data.status === "success") {
 				this.toastService.presentSuccessToast(data.message);
 				this.loading = false;
 
-				setTimeout(() => {
+
+				if(this.user.role === 'doctor') {
+					this.router.navigateByUrl(`/apps/doctor-appointment`);
+				} else {
 					this.router.navigateByUrl(`/apps/doctors`);
-				}, 1500)
+				}
 
 			} else {
 				this.toastService.presentErrorToast(data.message);

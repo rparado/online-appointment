@@ -62,7 +62,6 @@ export class IntroPage implements OnInit {
 		  this.userService.login(email, password)
 		  .subscribe({
 			next: (data) => {
-				console.log('data ', data)
 				if (data.status === "success") {
 					this.toastService.presentSuccessToast(data.message);
 					this.loading = false;

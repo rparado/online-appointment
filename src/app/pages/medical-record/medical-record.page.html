@@ -2,5 +2,29 @@
     <ng-container main-content>
         <h2 class="ion-margin-bottom">List of medical records.</h2>
 		<br />
+        <ion-list *ngIf="medicalRecords?.length; else noRecords">
+            <ion-item *ngFor="let record of medicalRecords" lines="full">
+            <ion-label>
+                <ion-text><strong>Patient</strong>: {{ record.patient?.profile?.firstName }} {{ record.patient?.profile?.lastName }}</ion-text>
+                <ion-text><strong>Created Date</strong>: {{ record.createdAt | date: 'longDate' }}</ion-text>
+            </ion-label>
+
+            <ion-buttons slot="end">
+                <ion-button fill="clear"  (click)="openRecordModal(record)">
+                    <ion-icon slot="icon-only" [icon]="eyeOutline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="download('http://localhost:3000/uploads/medicalRecords', record.file)">
+                    <ion-icon slot="icon-only" [icon]="downloadOutline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+            </ion-item>
+        </ion-list>
+
+        <ng-template #noRecords>
+            <div class="ion-text-center ion-margin-top">
+            <ion-icon [icon]="documentTextOutline" size="large"></ion-icon>
+            <p>No medical records found.</p>
+            </div>
+        </ng-template>
     </ng-container>
 </app-page-standard>

@@ -1,17 +1,18 @@
 ion-tab-bar {
     --border: 0 none;
-    height: 5rem;
+    height: 6rem;
     gap: 0.5rem;
 
     ion-icon {
         font-size: 1.25rem;
     }
     ion-tab-button {
-        height: 3.4375rem;
+
         font-size: 0.875rem;
         font-weight: 600;
         --color: var(--ion-color-primary);
         opacity: 0.8;
+        height: 6rem;
 
         .indicator {
             width: 4rem;

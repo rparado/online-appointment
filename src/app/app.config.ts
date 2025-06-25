@@ -12,6 +12,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { ApiErrorInterceptor } from "./interceptors/api.error.message.interceptor";
 
+
 const EnvironmentConfig = importProvidersFrom([
     IonicStorageModule.forRoot({
         name: '__appointmentappdb',

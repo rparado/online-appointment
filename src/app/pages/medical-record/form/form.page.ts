@@ -58,7 +58,6 @@ export class FormPage implements OnInit {
 
 	ngOnInit() {
 
-
 		const now = new Date();
   		this.today = now.toISOString().split('T')[0];
 

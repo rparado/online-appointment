@@ -17,4 +17,7 @@ export class MedicalRecordService {
 	createMedicalRecord(data: MedicalRecord): Observable<any> {
 		return this.http.post(`${this.API_BASE}medical-records/create`, data);
 	}
+	getMedicalRecords(): Observable<any> {
+		return this.http.get(`${this.API_BASE}medical-records/get-record`);
+	}
 }

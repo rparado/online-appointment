@@ -49,4 +49,8 @@ export const routes: Routes = [
     path: 'form',
     loadComponent: () => import('./pages/medical-record/form/form.page').then( m => m.FormPage)
   },
+  {
+    path: 'view-medical-record',
+    loadComponent: () => import('./pages/medical-record/view-medical-record/view-medical-record.page').then( m => m.ViewMedicalRecordPage)
+  },
 ];

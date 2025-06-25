@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+	<ion-buttons slot="start">
+	  <ion-button color="medium" (click)="close()">Cancel</ion-button>
+	</ion-buttons>
+	<ion-title>View record</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+   <ion-card *ngIf="record">
+		<ion-card-header>
+		  <ion-card-subtitle> <strong>Created Date:</strong> {{ record.createdAt | date: 'medium' }}</ion-card-subtitle>
+		</ion-card-header>
+
+		<ion-card-content>
+			<p><strong>Patient:</strong> {{ record.patient?.profile?.firstName }} {{ record.patient?.profile?.middleName }} {{ record.patient?.profile?.lastName }}</p>
+			<p><strong>Doctor:</strong> Dr. {{ record.doctor?.userProfile?.firstName }} {{ record.doctor?.userProfile?.middleName }} {{ record.doctor?.userProfile?.lastName }}</p>
+			<p><strong>Diagnosis:</strong> {{ record.diagnosis || 'N/A' }}</p>
+			<p><strong>Treatment:</strong> {{ record.treatment || 'N/A' }}</p>
+			<p><strong>Prescription:</strong> {{ record.prescription || 'N/A' }}</p>
+			<p><strong>Notes:</strong> {{ record.notes || 'N/A' }}</p>
+			<p><strong>Follow-Up Date:</strong> {{ record.followup_date || 'N/A' }}</p>
+		</ion-card-content>
+	  </ion-card>
+</ion-content>

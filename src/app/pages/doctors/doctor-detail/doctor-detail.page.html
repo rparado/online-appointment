@@ -19,8 +19,18 @@
 			  </ion-card>
 		}
 
-		<ion-modal trigger="create-appointment">
+		<ion-modal trigger="create-appointment" backdropDismiss="true">
 			<ng-template>
+				<ion-header>
+					<ion-toolbar>
+						<ion-title>Modal</ion-title>
+						<ion-buttons slot="end">
+						<ion-button (click)="modal.dismiss()">
+							<ion-icon [icon]="close"></ion-icon>
+						</ion-button>
+						</ion-buttons>
+					</ion-toolbar>
+				</ion-header>
 			  <ion-content class="ion-padding">
 				<form [formGroup]="myForm" enctype="multipart/form-data">
 					<div class="input-wrapper ion-margin-bottom">
@@ -58,6 +68,16 @@
 		<!-- agree -->
 		<ion-modal #validateAppointment>
 			<ng-template>
+				<ion-header>
+					<ion-toolbar>
+						<ion-title>Modal</ion-title>
+						<ion-buttons slot="end">
+						<ion-button (click)="modal.dismiss()">
+							<ion-icon [icon]="close"></ion-icon>
+						</ion-button>
+						</ion-buttons>
+					</ion-toolbar>
+				</ion-header>
 			  <ion-content class="ion-padding">
 				<h3>Are you sure you want to proceed?</h3>
 				  <ion-button 

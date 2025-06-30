@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonModal,IonLabel, IonText, IonInput, IonDatetime, IonSelectOption, IonSelect, NavController } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonModal,IonLabel, IonText, IonInput, IonDatetime, IonSelectOption, IonSelect, NavController, IonTitle, IonToolbar, IonButtons, IonHeader, IonIcon } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DoctorService } from '@oda/core/services/doctors/doctor.service';
 import { finalize } from 'rxjs';
 import { Doctor } from 'src/app/models/Doctor';
+import { closeOutline } from 'ionicons/icons';
 
 import { AppointmentService } from '@oda/core/services/appointment/appointment.service';
 import { ToastService } from '@oda/core/services/toast.service';
@@ -17,7 +18,7 @@ import { Preferences } from '@capacitor/preferences';
 	templateUrl: './doctor-detail.page.html',
 	styleUrls: ['./doctor-detail.page.scss'],
 	standalone: true,
-	imports: [IonDatetime, IonInput, IonText, IonLabel, IonModal, IonCardSubtitle,  IonCardContent, IonCardHeader, IonCard, IonImg, IonButton, IonContent, CommonModule, FormsModule,PageStandardPage, ReactiveFormsModule, IonSelectOption, IonSelect ]
+	imports: [IonIcon, IonHeader, IonButtons, IonToolbar, IonTitle, IonDatetime, IonInput, IonText, IonLabel, IonModal, IonCardSubtitle,  IonCardContent, IonCardHeader, IonCard, IonImg, IonButton, IonContent, CommonModule, FormsModule,PageStandardPage, ReactiveFormsModule, IonSelectOption, IonSelect ]
 })
 export class DoctorDetailPage implements OnInit {
 
@@ -57,6 +58,8 @@ export class DoctorDetailPage implements OnInit {
 	appointmentDate = new Date().toISOString().split('T')[0];
 
 	@ViewChild('validateAppointment', { static: true }) validateAppointment!: IonModal;
+
+	close = closeOutline;
 
 	constructor() { }
 

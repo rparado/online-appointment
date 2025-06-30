@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonButtons, IonButton, ModalController, IonLabel, IonText, IonRadio, IonDatetime, IonModal, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,  IonButtons, IonButton, ModalController, IonLabel, IonText,  IonDatetime, IonModal, IonInput } from '@ionic/angular/standalone';
 import { MedicalRecordService } from '@oda/core/services/medical-record/medical-record.service';
 import { finalize } from 'rxjs';
 import { ToastService } from '@oda/core/services/toast.service';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
   standalone: true,
-  imports: [IonModal, IonDatetime, IonRadio, IonText, IonLabel, IonButton, IonButtons, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, IonInput]
+  imports: [IonModal, IonDatetime, IonText, IonLabel, IonButton, IonButtons,  IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, IonInput]
 })
 export class FormPage implements OnInit {
 	@Input() appointment: any;
@@ -29,7 +29,7 @@ export class FormPage implements OnInit {
 		prescription: ['', Validators.compose([Validators.required])],
 		note: [''],
 		followup_date: ['', Validators.compose([Validators.required])],
-		file: ['', Validators.compose([Validators.required])],
+		file: [''],
 	});
 
 	showDatePicker = false;

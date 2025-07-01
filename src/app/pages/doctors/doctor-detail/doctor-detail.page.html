@@ -47,9 +47,8 @@
 						<ion-select [value]="selectedSlot" (ionChange)="onSlotChange($event)" formControlName="time_slot" interface="popover">
 							<ion-select-option 
 								*ngFor="let slot of availableSlots" 
-								[value]="slot.time"
-								[disabled]="slot.disabled">
-							  {{ slot.time }}
+								[value]="slot">
+							  {{ slot }}
 							</ion-select-option>
 						  </ion-select>
 					</div>

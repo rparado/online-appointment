@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonButton, IonImg, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonModal,IonLabel, IonText, IonInput, IonDatetime, IonSelectOption, IonSelect, NavController, IonTitle, IonToolbar, IonButtons, IonHeader, IonIcon } from '@ionic/angular/standalone';
 import { PageStandardPage } from 'src/app/layouts/page-standard/page-standard.page';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class DoctorDetailPage implements OnInit {
 
 	today = new Date().toISOString().split('T')[0];
 
-	availableSlots: { time: string; disabled: boolean }[] = [];
+	availableSlots: string[] = [];
 
 	selectedSlot: string = '';
 
@@ -66,41 +66,21 @@ export class DoctorDetailPage implements OnInit {
 	
 
 	getAvailableSlots() {
-		 this.appointmentService.getAvailableSlots(<any>this.doctor?.id, this.appointmentDate)
-			.subscribe((res: string[]) => {
-				const now = new Date();
-				const appointmentDate = new Date(this.appointmentDate);
-				const isToday = now.toDateString() === appointmentDate.toDateString();
+		this.appointmentService.getAvailableSlots(<any>this.doctor?.id, this.appointmentDate)
+		.subscribe((res: any) => {
 
-				this.availableSlots = res.map((slot) => {
-					const [time, meridian] = slot.split(' ');
-					let [hours, minutes] = time.split(':').map(Number);
+			this.availableSlots = res;
 
-					if (meridian === 'PM' && hours < 12) hours += 12;
-					if (meridian === 'AM' && hours === 12) hours = 0;
+			// Set default
+			if (this.availableSlots.length > 0) {
+			  this.selectedSlot = this.availableSlots[0];
+			}
 
-					const slotTime = new Date(appointmentDate);
-					slotTime.setHours(hours, minutes, 0, 0);
-
-				const isDisabled = isToday && slotTime <= now;
-
-					return {
-						time: slot,
-						disabled: isDisabled
-					};
-				});
-
-				// Set first valid slot as default
-				const firstAvailable = this.availableSlots.find(s => !s.disabled);
-				this.selectedSlot = firstAvailable?.time ?? '';
-
-				this.myForm = this.fb.group({
-					doctor_id: [''],
-					patient_id: [''],
-					appointment_date: [this.appointmentDate],
-					time_slot: [this.selectedSlot]
-				});
-		});
+			this.myForm = this.fb.group({
+				appointment_date: [this.appointmentDate],
+				time_slot: [this.selectedSlot]
+			});
+		  });
 	}
 
 	ngOnInit() {
